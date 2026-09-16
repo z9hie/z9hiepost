@@ -103,40 +103,52 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .channel-check-info{flex:1;min-width:0}
 .channel-check-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .channel-check-username{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:2px}
-/* BUTTON BUILDER */
-.btn-builder{margin-bottom:12px}
-.btn-item{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px}
-.btn-item-row{display:flex;gap:8px;align-items:center}
-.btn-item-input{flex:1;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;font-family:inherit;outline:none}
-.btn-item-input:focus{border-color:var(--accent)}
-.btn-remove{width:32px;height:32px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--danger);flex-shrink:0;font-family:inherit;font-size:16px}
-.btn-remove:hover{background:rgba(239,68,68,0.2)}
-.style-picker{display:flex;gap:6px;flex-wrap:wrap}
-.style-opt{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text-secondary);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
-.style-opt:hover{background:rgba(255,255,255,0.06)}
-.style-opt.active.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.style-opt.active.success{background:var(--green);border-color:var(--green);color:#fff}
-.style-opt.active.danger{background:var(--danger);border-color:var(--danger);color:#fff}
-.style-opt.active.default{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff}
+/* BUTTON ROWS BUILDER */
+.row-block{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:10px}
+.row-block-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.row-block-title{font-size:10px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+.row-actions{display:flex;gap:4px}
+.mini-btn{width:26px;height:26px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:7px;color:var(--text-secondary);font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.mini-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.mini-btn.danger{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--danger)}
+.mini-btn.danger:hover{background:rgba(239,68,68,0.2)}
+.btn-card{background:rgba(0,0,0,0.25);border-radius:9px;padding:8px;margin-bottom:6px;display:flex;flex-direction:column;gap:6px}
+.btn-card:last-child{margin-bottom:0}
+.btn-row-inputs{display:flex;gap:6px;align-items:center}
+.btn-input{flex:1;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;font-family:inherit;outline:none;min-width:0}
+.btn-input:focus{border-color:var(--accent)}
+.btn-select{padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;font-family:inherit;outline:none;cursor:pointer;min-width:0}
+.btn-select:focus{border-color:var(--accent)}
 /* PREVIEW */
 .preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;min-height:60px}
 .preview-box{overflow-wrap:anywhere}
-.preview-box p{margin:0 0 10px}.preview-box p:last-child{margin-bottom:0}
-.preview-box b,.preview-box strong{font-weight:800}.preview-box i,.preview-box em{font-style:italic}.preview-box u{ text-decoration:underline}.preview-box s,.preview-box del{ text-decoration:line-through}
-.preview-box code{background:rgba(255,255,255,.08);padding:2px 5px;border-radius:5px;font-family:monospace}.preview-box pre{background:#09090d;padding:10px;border-radius:8px;overflow:auto;white-space:pre-wrap}.preview-box blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--accent);background:rgba(47,128,237,.06);border-radius:4px}
-.preview-box tg-button{display:inline-flex;align-items:center;vertical-align:middle;margin:2px 3px;padding:5px 10px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;line-height:1.2;cursor:default;white-space:nowrap}
-.preview-box tg-button[style="success"]{background:var(--green)}.preview-box tg-button[style="danger"]{background:var(--danger)}.preview-box tg-button[style="link"]{background:transparent;color:var(--accent);padding:0}
-.preview-box tg-button-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.preview-box tg-button-row[align="center"]{justify-content:center}.preview-box tg-button-row[align="right"]{justify-content:flex-end}
-.preview-box tg-spoiler{background:rgba(255,255,255,0.08);border-radius:4px;padding:1px 4px;cursor:pointer}
+.preview-box b,.preview-box strong{font-weight:800}
+.preview-box i,.preview-box em{font-style:italic}
+.preview-box u{text-decoration:underline}
+.preview-box s,.preview-box del{text-decoration:line-through}
+.preview-box code{background:rgba(255,255,255,.08);padding:2px 5px;border-radius:5px;font-family:monospace}
+.preview-box pre{background:#09090d;padding:10px;border-radius:8px;overflow:auto;white-space:pre-wrap}
+.preview-box blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--accent);background:rgba(47,128,237,.06);border-radius:4px}
+.preview-box tg-spoiler{background:rgba(255,255,255,0.08);border-radius:4px;padding:1px 4px}
+.preview-box a{color:var(--accent)}
 .preview-hint{margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5}
 .preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}
-/* PREVIEW DEVICE TOGGLE */
 .preview-device-toggle{display:flex;gap:6px;margin-bottom:8px}
 .preview-device-btn{padding:6px 12px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
 .preview-device-btn:hover{background:rgba(255,255,255,0.06)}
 .preview-device-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.preview-box.device-phone{max-width:340px;margin:0 auto}
+.preview-box.device-phone{max-width:340px}
 .preview-box.device-desktop{max-width:600px}
+
+/* PREVIEW BUTTONS */
+.preview-buttons{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-width:340px;transition:max-width 0.2s}
+.preview-buttons.device-desktop{max-width:600px}
+.preview-btn-row{display:flex;gap:6px}
+.preview-btn{flex:1;padding:10px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:var(--text);font-size:12px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.preview-btn.primary{background:var(--accent);border-color:var(--accent)}
+.preview-btn.success{background:var(--green);border-color:var(--green)}
+.preview-btn.danger{background:var(--danger);border-color:var(--danger)}
+
 .section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;margin-top:20px}
 .section-title:first-child{margin-top:0}
 .toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:rgba(20,20,28,0.95);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:12px 20px;color:var(--text);font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s;max-width:90%;text-align:center}
@@ -150,7 +162,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .nav-btn.active svg{stroke:var(--accent)}
 .nav-btn.active span{color:var(--accent)}
 .nav-btn.active{background:rgba(47,128,237,0.08)}
-/* DESKTOP */
+
 @media (min-width:1024px){
 .main{max-width:1400px;padding:24px 32px 32px;display:grid;grid-template-columns:1fr;gap:24px}
 .bottom-nav{display:none}
@@ -238,7 +250,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
             <div class="editor-layout">
                 <div class="editor-main">
                     <div class="form-group">
-                        <label class="form-label">Текст поста (Bot API 10.3 Rich Message)</label>
+                        <label class="form-label">Текст поста</label>
                         <div class="toolbar">
                             <button class="tool-btn" onclick="fmt('bold')" title="Жирный"><b>B</b></button>
                             <button class="tool-btn" onclick="fmt('italic')" title="Курсив"><i>I</i></button>
@@ -251,11 +263,9 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                             <button class="tool-btn" onclick="fmt('spoiler')" title="Спойлер"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                             <button class="tool-btn" onclick="fmt('quote')" title="Цитата">❝</button>
                             <div class="tool-sep"></div>
-                            <button class="tool-btn" onclick="insertInlineButton()" title="Кнопка внутри текста (tg-button)">🔘</button>
-                            <button class="tool-btn" onclick="insertButtonRow()" title="Ряд кнопок (tg-button-row)">▦</button>
                             <button class="tool-btn" onclick="toggleEmoji()" title="Эмодзи">😀</button>
                         </div>
-                        <textarea class="form-textarea" id="editor-text" placeholder="Напиши текст поста...&#10;&#10;Используй 🔘 чтобы вставить кнопку прямо в текст." oninput="updatePreview()"></textarea>
+                        <textarea class="form-textarea" id="editor-text" placeholder="Напиши текст поста..." oninput="updatePreview()"></textarea>
                         <div class="emoji-picker" id="emoji-picker"></div>
                     </div>
 
@@ -270,10 +280,18 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                         <button class="preview-device-btn" data-device="desktop" onclick="setPreviewDevice('desktop')">🖥 ПК</button>
                     </div>
                     <div class="preview-box device-phone" id="preview-box"></div>
-                    <div class="preview-hint">Предпросмотр показывает Rich Message с кнопками внутри текста (Bot API 10.3). Цвета кнопок соответствуют style.</div>
+                    <div class="preview-buttons" id="preview-buttons"></div>
+                    <div class="preview-hint">Кнопки отображаются под постом, как в Telegram. Ряд = одна строка.</div>
                 </div>
 
                 <div class="editor-side">
+                    <div class="section-title">Кнопки</div>
+                    <div id="button-rows-builder"></div>
+                    <button class="btn-secondary" onclick="addRow()" style="margin-top:0;">
+                        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Добавить ряд
+                    </button>
+
                     <div class="section-title">Каналы</div>
                     <div class="channels-list" id="editor-channels"></div>
 
@@ -299,29 +317,33 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         <div class="page" id="page-help">
             <div class="page-head"><h2>Помощь</h2></div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🔘 Кнопки внутри текста (Bot API 10.3)</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📝 Форматирование</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    Нажми <b>🔘</b> в панели инструментов, чтобы вставить кнопку прямо в текст. Или пиши вручную:
-                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;">&lt;tg-button type="url" style="primary" url="https://..."&gt;Текст&lt;/tg-button&gt;</code>
+                    Используй панель инструментов над текстом. Или пиши HTML вручную:
+                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;b&gt;жирный&lt;/b&gt;</code>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;i&gt;курсив&lt;/i&gt;</code>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;a href="url"&gt;ссылка&lt;/a&gt;</code>
                 </div>
             </div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">▦ Ряд кнопок</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🔘 Кнопки рядами</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    Кнопки можно группировать в ряды — они будут отображаться под текстом или в потоке:
-                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;">&lt;tg-button-row align="center"&gt;...&lt;/tg-button-row&gt;</code>
+                    Справа в редакторе жми «Добавить ряд». В каждом ряду может быть от 1 до 8 кнопок. Кнопки одного ряда идут в одну строку под постом. Пример:
+                    <br>• Ряд 1: [Кнопка 1] [Кнопка 2] [Кнопка 3]
+                    <br>• Ряд 2: [Кнопка 4] [Кнопка 5]
+                    <br>• Ряд 3: [Кнопка 6]
                 </div>
             </div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🎨 Цвета кнопок</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🎨 Стили кнопок</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    🔵 <b>primary</b> · 🟢 <b>success</b> · 🔴 <b>danger</b> · 🔗 <b>link</b> (без фона)
+                    Стиль влияет только на предпросмотр. В Telegram все inline-кнопки одного цвета, это ограничение API.
                 </div>
             </div>
             <div class="card">
                 <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📸 Фото</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    Нажми «+» в блоке фото → выбери до 10 изображений. Они автоматически загрузятся и будут отправлены с постом.
+                    Нажми «+» в блоке фото → выбери до 10 изображений. Они загрузятся и отправятся с постом.
                 </div>
             </div>
         </div>
@@ -361,17 +383,32 @@ if (tg) {
 const SERVER_URL = "https://z9hiepost.z9hie.workers.dev";
 const user = tg?.initDataUnsafe?.user || { first_name: 'Гость', username: 'guest', id: 0 };
 const ADMIN_ID = 5640325235;
-const isAdmin = user.id === ADMIN_ID;
 
 let channels = [];
 let posts = [];
 let currentPost = null;
 let postTab = 'draft';
 let images = [];
+let buttonRows = [];
 let previewDevice = 'phone';
 
-async function apiGet(path) { const res = await fetch(SERVER_URL + path, { headers: { 'X-Telegram-Init-Data': tg?.initData || '' } }); return res.json(); }
-async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json','X-Telegram-Init-Data':tg?.initData || ''}, body:JSON.stringify(data) }); return res.json(); }
+async function apiGet(path) {
+    const res = await fetch(SERVER_URL + path, {
+        headers: { 'X-Telegram-Init-Data': tg?.initData || '' }
+    });
+    return res.json();
+}
+async function apiPost(path, data) {
+    const res = await fetch(SERVER_URL + path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Telegram-Init-Data': tg?.initData || ''
+        },
+        body: JSON.stringify(data)
+    });
+    return res.json();
+}
 
 /* ==================== DATA ==================== */
 async function loadChannels() {
@@ -447,6 +484,7 @@ function renderPosts() {
     el.innerHTML = filtered.map(p => {
         const date = new Date(p.createdAt).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
         const statusText = { draft: 'Черновик', scheduled: 'Запланирован', published: 'Опубликован' }[p.status] || p.status;
+        const btnCount = (p.buttonRows || []).reduce((sum, row) => sum + row.length, 0);
         return `<div class="card post-card" onclick="editPost('${p.id}')">
             <div class="post-header">
                 <div class="post-text-preview">${(p.text || 'Без текста').substring(0, 100)}</div>
@@ -455,6 +493,7 @@ function renderPosts() {
             <div class="post-meta">
                 <span>📅 ${date}</span>
                 ${p.channels && p.channels.length ? `<span>📢 ${p.channels.length}</span>` : ''}
+                ${btnCount ? `<span>🔘 ${btnCount}</span>` : ''}
                 ${p.images && p.images.length ? `<span>📸 ${p.images.length}</span>` : ''}
             </div>
         </div>`;
@@ -481,18 +520,23 @@ function setPreviewDevice(device) {
     previewDevice = device;
     document.querySelectorAll('.preview-device-btn').forEach(b => b.classList.toggle('active', b.dataset.device === device));
     const box = document.getElementById('preview-box');
+    const btns = document.getElementById('preview-buttons');
     box.classList.remove('device-phone', 'device-desktop');
     box.classList.add('device-' + device);
+    btns.classList.remove('device-phone', 'device-desktop');
+    btns.classList.add('device-' + device);
 }
 
 /* ==================== EDITOR ==================== */
 function openNewPost() {
     currentPost = null;
     images = [];
+    buttonRows = [];
     document.getElementById('editor-title').textContent = 'Новый пост';
     document.getElementById('editor-text').value = '';
     document.getElementById('editor-schedule').value = '';
     renderEditorChannels();
+    renderButtonRowsBuilder();
     renderImages();
     updatePreview();
     checkSchedule();
@@ -504,15 +548,19 @@ function editPost(postId) {
     if (!post) return;
     currentPost = post;
     images = post.images ? JSON.parse(JSON.stringify(post.images)) : [];
+    buttonRows = post.buttonRows ? JSON.parse(JSON.stringify(post.buttonRows)) : [];
     document.getElementById('editor-title').textContent = 'Редактировать';
     document.getElementById('editor-text').value = post.text || '';
-    document.getElementById('editor-schedule').value = post.scheduledAt ? new Date(post.scheduledAt - new Date().getTimezoneOffset()*60000).toISOString().slice(0, 16) : '';
+    document.getElementById('editor-schedule').value = post.scheduledAt
+        ? new Date(post.scheduledAt - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)
+        : '';
     renderEditorChannels();
     setTimeout(() => {
         document.querySelectorAll('.editor-channel-check').forEach(cb => {
             cb.checked = post.channels && post.channels.includes(cb.value);
         });
     }, 50);
+    renderButtonRowsBuilder();
     renderImages();
     updatePreview();
     checkSchedule();
@@ -522,51 +570,35 @@ function editPost(postId) {
 function updatePreview() {
     const text = document.getElementById('editor-text').value;
     const box = document.getElementById('preview-box');
-    if (!text) { box.innerHTML = ''; return; }
-    box.innerHTML = text.replace(/\n/g, '<br>');
+    const btns = document.getElementById('preview-buttons');
+
+    if (!text) {
+        box.innerHTML = '';
+    } else {
+        box.innerHTML = text.replace(/\n/g, '<br>');
+    }
+
+    // Рендер рядов кнопок
+    if (!buttonRows.length) {
+        btns.innerHTML = '';
+        return;
+    }
+
+    btns.innerHTML = buttonRows.map(row => `
+        <div class="preview-btn-row">
+            ${row.map(btn => `
+                <div class="preview-btn ${btn.style || ''}">${escapeHtml(btn.text) || 'Кнопка'}</div>
+            `).join('')}
+        </div>
+    `).join('');
 }
 
-function insertAtCursor(value) {
-    const ta = document.getElementById('editor-text');
-    const start = ta.selectionStart;
-    const end = ta.selectionEnd;
-    ta.value = ta.value.substring(0, start) + value + ta.value.substring(end);
-    ta.focus();
-    const pos = start + value.length;
-    ta.setSelectionRange(pos, pos);
-    updatePreview();
-}
-
-function escapeHtmlAttr(value) {
-    return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function insertInlineButton() {
-    const text = prompt('Текст кнопки:', 'Открыть');
-    if (!text) return;
-    const type = prompt('Тип кнопки: url или callback', 'url');
-    if (!type || !['url', 'callback'].includes(type)) { showToast('Тип: url или callback', 'error'); return; }
-    const value = prompt(type === 'url' ? 'URL:' : 'callback_data:', type === 'url' ? 'https://' : 'button_1');
-    if (!value) return;
-    const style = prompt('Стиль: primary / success / danger / link', 'primary');
-    if (!style || !['primary','success','danger','link'].includes(style)) { showToast('Неверный стиль', 'error'); return; }
-    const attr = type === 'url' ? `url="${escapeHtmlAttr(value)}"` : `data="${escapeHtmlAttr(value)}"`;
-    const tag = `<tg-button type="${type === 'callback' ? 'callback_data' : 'url'}" style="${style}" ${attr}>${escapeHtmlAttr(text)}</tg-button>`;
-    insertAtCursor(tag);
-}
-
-function insertButtonRow() {
-    const text = prompt('Текст первой кнопки:', 'Кнопка');
-    if (!text) return;
-    const type = prompt('Тип: url или callback', 'url');
-    if (!['url','callback'].includes(type)) return;
-    const value = prompt(type === 'url' ? 'URL:' : 'callback_data:', type === 'url' ? 'https://' : 'button_1');
-    if (!value) return;
-    const style = prompt('Стиль: primary / success / danger / link', 'primary');
-    if (!['primary','success','danger','link'].includes(style)) return;
-    const attr = type === 'url' ? `url="${escapeHtmlAttr(value)}"` : `data="${escapeHtmlAttr(value)}"`;
-    const tag = `<tg-button-row align="center"><tg-button type="${type === 'callback' ? 'callback_data' : 'url'}" style="${style}" ${attr}>${escapeHtmlAttr(text)}</tg-button></tg-button-row>`;
-    insertAtCursor(tag);
+function escapeHtml(str) {
+    return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 }
 
 /* ==================== TOOLBAR ==================== */
@@ -577,13 +609,13 @@ function fmt(type) {
     const selected = ta.value.substring(start, end);
     let replacement = '';
     let cursorOffset = 0;
-    
+
     const wrap = (before, after, placeholder) => {
         const txt = selected || placeholder;
         replacement = before + txt + after;
         cursorOffset = before.length + txt.length;
     };
-    
+
     switch(type) {
         case 'bold': wrap('<b>', '</b>', 'жирный'); break;
         case 'italic': wrap('<i>', '</i>', 'курсив'); break;
@@ -602,11 +634,96 @@ function fmt(type) {
             break;
         }
     }
-    
+
     ta.value = ta.value.substring(0, start) + replacement + ta.value.substring(end);
     ta.focus();
     ta.setSelectionRange(start + cursorOffset, start + cursorOffset);
     updatePreview();
+}
+
+/* ==================== КНОПКИ РЯДАМИ ==================== */
+function renderButtonRowsBuilder() {
+    const el = document.getElementById('button-rows-builder');
+    if (!buttonRows.length) {
+        el.innerHTML = '<div style="padding:14px;text-align:center;color:var(--text-muted);font-size:12px;background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:12px;">Нет кнопок. Нажми «Добавить ряд».</div>';
+        return;
+    }
+
+    el.innerHTML = buttonRows.map((row, ri) => `
+        <div class="row-block">
+            <div class="row-block-head">
+                <span class="row-block-title">Ряд ${ri + 1} · ${row.length} кноп.</span>
+                <div class="row-actions">
+                    <button class="mini-btn" onclick="addButtonToRow(${ri})" title="Добавить кнопку в этот ряд">+</button>
+                    <button class="mini-btn danger" onclick="removeRow(${ri})" title="Удалить ряд">×</button>
+                </div>
+            </div>
+            ${row.map((btn, bi) => `
+                <div class="btn-card">
+                    <div class="btn-row-inputs">
+                        <input type="text" class="btn-input" placeholder="Текст кнопки" value="${escapeHtml(btn.text)}" oninput="updateButton(${ri}, ${bi}, 'text', this.value)">
+                        <button class="mini-btn danger" onclick="removeButtonFromRow(${ri}, ${bi})" title="Удалить кнопку">×</button>
+                    </div>
+                    <div class="btn-row-inputs">
+                        <select class="btn-select" onchange="updateButton(${ri}, ${bi}, 'type', this.value); renderButtonRowsBuilder();">
+                            <option value="url" ${btn.type === 'url' ? 'selected' : ''}>URL</option>
+                            <option value="callback" ${btn.type === 'callback' ? 'selected' : ''}>Callback</option>
+                        </select>
+                        <select class="btn-select" onchange="updateButton(${ri}, ${bi}, 'style', this.value); renderButtonRowsBuilder();">
+                            <option value="primary" ${btn.style === 'primary' ? 'selected' : ''}>🔵 Синяя</option>
+                            <option value="success" ${btn.style === 'success' ? 'selected' : ''}>🟢 Зелёная</option>
+                            <option value="danger" ${btn.style === 'danger' ? 'selected' : ''}>🔴 Красная</option>
+                            <option value="" ${!btn.style ? 'selected' : ''}>⚪ Обычная</option>
+                        </select>
+                    </div>
+                    <div class="btn-row-inputs">
+                        <input type="text" class="btn-input"
+                            placeholder="${btn.type === 'callback' ? 'callback_data (напр. buy_1)' : 'https://...'}"
+                            value="${btn.type === 'callback' ? escapeHtml(btn.callback) : escapeHtml(btn.url)}"
+                            oninput="updateButton(${ri}, ${bi}, '${btn.type === 'callback' ? 'callback' : 'url'}', this.value)">
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function addRow() {
+    buttonRows.push([{ text: '', type: 'url', url: '', callback: '', style: 'primary' }]);
+    renderButtonRowsBuilder();
+    updatePreview();
+}
+
+function removeRow(ri) {
+    buttonRows.splice(ri, 1);
+    renderButtonRowsBuilder();
+    updatePreview();
+}
+
+function addButtonToRow(ri) {
+    if (buttonRows[ri].length >= 8) {
+        showToast('Максимум 8 кнопок в ряду', 'error');
+        return;
+    }
+    buttonRows[ri].push({ text: '', type: 'url', url: '', callback: '', style: 'primary' });
+    renderButtonRowsBuilder();
+    updatePreview();
+}
+
+function removeButtonFromRow(ri, bi) {
+    buttonRows[ri].splice(bi, 1);
+    if (buttonRows[ri].length === 0) {
+        buttonRows.splice(ri, 1);
+    }
+    renderButtonRowsBuilder();
+    updatePreview();
+}
+
+function updateButton(ri, bi, key, value) {
+    if (buttonRows[ri] && buttonRows[ri][bi]) {
+        buttonRows[ri][bi][key] = value;
+        updatePreview();
+    }
 }
 
 /* ==================== EMOJI ==================== */
@@ -674,14 +791,14 @@ async function handleImageUpload(event) {
         if (images.length >= 10) break;
         if (!file.type.startsWith('image/')) continue;
         if (file.size > 10 * 1024 * 1024) { showToast('Максимум 10 МБ', 'error'); continue; }
-        
+
         const reader = new FileReader();
         reader.onload = async (e) => {
             const dataUrl = e.target.result;
             const tempIndex = images.length;
             images.push({ url: dataUrl, fileId: null, uploading: true });
             renderImages();
-            
+
             try {
                 const data = await apiPost('/api/upload', { userId: user.id, image: dataUrl });
                 if (data.success) {
@@ -712,9 +829,16 @@ function getSelectedChannels() {
 function getPostData() {
     const scheduledStr = document.getElementById('editor-schedule').value;
     const text = document.getElementById('editor-text').value;
+
+    // Фильтруем пустые кнопки
+    const cleanRows = buttonRows
+        .map(row => row.filter(b => b.text && (b.url || b.callback)))
+        .filter(row => row.length > 0);
+
     return {
         text,
         images: images.filter(img => img.fileId).map(img => img.fileId),
+        buttonRows: cleanRows,
         channels: getSelectedChannels(),
         scheduledAt: scheduledStr ? new Date(scheduledStr).getTime() : null
     };
@@ -730,7 +854,7 @@ async function saveDraft() {
     if (!post.text && post.images.length === 0) { showToast('Напиши текст или добавь фото', 'error'); return; }
     post.status = 'draft';
     post.scheduledAt = null;
-    
+
     if (currentPost) {
         await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
     } else {
@@ -747,9 +871,9 @@ async function publishNow() {
     if (!post.text && post.images.length === 0) { showToast('Напиши текст или добавь фото', 'error'); return; }
     if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
     if (images.some(img => img.uploading)) { showToast('Дождись загрузки фото', 'error'); return; }
-    
+
     if (!confirm(`Опубликовать в ${post.channels.length} канал(ов)?`)) return;
-    
+
     showToast('Публикуем...');
     const result = await apiPost('/api/posts/publish-direct', { userId: user.id, post });
     if (result.success) {
@@ -768,7 +892,7 @@ async function schedulePost() {
     if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
     if (!post.scheduledAt) { showToast('Установи дату', 'error'); return; }
     post.status = 'scheduled';
-    
+
     if (currentPost) {
         await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
     } else {
