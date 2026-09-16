@@ -119,6 +119,15 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .style-opt.active.danger{background:var(--danger);border-color:var(--danger);color:#fff}
 .style-opt.active.default{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff}
 .preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;min-height:60px}
+.preview-box{overflow-wrap:anywhere}
+.preview-box p{margin:0 0 10px}.preview-box p:last-child{margin-bottom:0}
+.preview-box b,.preview-box strong{font-weight:800}.preview-box i,.preview-box em{font-style:italic}.preview-box u{ text-decoration:underline}.preview-box s,.preview-box del{ text-decoration:line-through}
+.preview-box code{background:rgba(255,255,255,.08);padding:2px 5px;border-radius:5px;font-family:monospace}.preview-box pre{background:#09090d;padding:10px;border-radius:8px;overflow:auto;white-space:pre-wrap}.preview-box blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--accent);background:rgba(47,128,237,.06);border-radius:4px}
+.preview-box tg-button{display:inline-flex;align-items:center;vertical-align:middle;margin:2px 3px;padding:5px 10px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;line-height:1.2;cursor:default;white-space:nowrap}
+.preview-box tg-button[style="success"]{background:var(--green)}.preview-box tg-button[style="danger"]{background:var(--danger)}.preview-box tg-button[style="link"]{background:transparent;color:var(--accent);padding:0}
+.preview-box tg-button-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.preview-box tg-button-row[align="center"]{justify-content:center}.preview-box tg-button-row[align="right"]{justify-content:flex-end}
+.preview-hint{margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5}
+
 .preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}
 .section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;margin-top:20px}
 .section-title:first-child{margin-top:0}
@@ -234,6 +243,8 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                             <button class="tool-btn" onclick="fmt('spoiler')" title="Спойлер"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                             <button class="tool-btn" onclick="fmt('quote')" title="Цитата">❝</button>
                             <div class="tool-sep"></div>
+                            <button class="tool-btn" onclick="insertInlineButton()" title="Кнопка внутри текста">🔘</button>
+                            <button class="tool-btn" onclick="insertButtonRow()" title="Ряд кнопок">▦</button>
                             <button class="tool-btn" onclick="toggleEmoji()" title="Эмодзи">😀</button>
                         </div>
                         <textarea class="form-textarea" id="editor-text" placeholder="Напиши текст поста..." oninput="updatePreview()"></textarea>
@@ -246,7 +257,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                     </div>
 
                     <div class="section-title">Предпросмотр</div>
-                    <div class="preview-box" id="preview-box"></div>
+                    <div class="preview-box" id="preview-box"></div><div class="preview-hint">Предпросмотр старается повторить Telegram: форматирование и кнопки показываются визуально. Кнопки здесь не нажимаются.</div>
                 </div>
 
                 <div class="editor-side">
@@ -348,8 +359,8 @@ let postTab = 'draft';
 let buttons = [];
 let images = [];
 
-async function apiGet(path) { const res = await fetch(SERVER_URL + path); return res.json(); }
-async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }); return res.json(); }
+async function apiGet(path) { const res = await fetch(SERVER_URL + path, { headers: { 'X-Telegram-Init-Data': tg?.initData || '' } }); return res.json(); }
+async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json','X-Telegram-Init-Data':tg?.initData || ''}, body:JSON.stringify(data) }); return res.json(); }
 
 /* ==================== DATA ==================== */
 async function loadChannels() {
@@ -495,7 +506,54 @@ function editPost(postId) {
 
 function updatePreview() {
     const text = document.getElementById('editor-text').value;
-    document.getElementById('preview-box').innerHTML = text || '';
+    const box = document.getElementById('preview-box');
+    if (!text) { box.innerHTML = ''; return; }
+    // Telegram accepts HTML directly for Rich Messages. For the browser preview we
+    // only add visual handling for line breaks and the new tg-button elements.
+    box.innerHTML = text.replace(/\n/g, '<br>');
+}
+
+function insertAtCursor(value) {
+    const ta = document.getElementById('editor-text');
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    ta.value = ta.value.substring(0, start) + value + ta.value.substring(end);
+    ta.focus();
+    const pos = start + value.length;
+    ta.setSelectionRange(pos, pos);
+    updatePreview();
+}
+
+function escapeHtmlAttr(value) {
+    return String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function insertInlineButton() {
+    const text = prompt('Текст кнопки:', 'Открыть');
+    if (!text) return;
+    const type = prompt('Тип кнопки: url или callback', 'url');
+    if (!type || !['url', 'callback'].includes(type)) { showToast('Тип: url или callback', 'error'); return; }
+    const value = prompt(type === 'url' ? 'URL:' : 'callback_data:', type === 'url' ? 'https://' : 'button_1');
+    if (!value) return;
+    const style = prompt('Стиль: primary / success / danger / link', 'primary');
+    if (!style || !['primary','success','danger','link'].includes(style)) { showToast('Неверный стиль', 'error'); return; }
+    const attr = type === 'url' ? `url="${escapeHtmlAttr(value)}"` : `data="${escapeHtmlAttr(value)}"`;
+    const tag = `<tg-button type="${type === 'callback' ? 'callback_data' : 'url'}" style="${style}" ${attr}>${escapeHtmlAttr(text)}</tg-button>`;
+    insertAtCursor(tag);
+}
+
+function insertButtonRow() {
+    const text = prompt('Текст первой кнопки:', 'Кнопка');
+    if (!text) return;
+    const type = prompt('Тип: url или callback', 'url');
+    if (!['url','callback'].includes(type)) return;
+    const value = prompt(type === 'url' ? 'URL:' : 'callback_data:', type === 'url' ? 'https://' : 'button_1');
+    if (!value) return;
+    const style = prompt('Стиль: primary / success / danger / link', 'primary');
+    if (!['primary','success','danger','link'].includes(style)) return;
+    const attr = type === 'url' ? `url="${escapeHtmlAttr(value)}"` : `data="${escapeHtmlAttr(value)}"`;
+    const tag = `<tg-button-row align="center"><tg-button type="${type === 'callback' ? 'callback_data' : 'url'}" style="${style}" ${attr}>${escapeHtmlAttr(text)}</tg-button></tg-button-row>`;
+    insertAtCursor(tag);
 }
 
 /* ==================== TOOLBAR ==================== */
@@ -682,8 +740,9 @@ function getSelectedChannels() {
 
 function getPostData() {
     const scheduledStr = document.getElementById('editor-schedule').value;
+    const text = document.getElementById('editor-text').value;
     return {
-        text: document.getElementById('editor-text').value,
+        text,
         images: images.filter(img => img.fileId).map(img => img.fileId),
         buttons: buttons.filter(b => b.text && (b.url || b.callback)),
         channels: getSelectedChannels(),
@@ -714,6 +773,7 @@ async function saveDraft() {
 
 async function publishNow() {
     const post = getPostData();
+    if (post.text.length > 32768) { showToast('Текст слишком длинный: максимум 32768 символов', 'error'); return; }
     if (!post.text && post.images.length === 0) { showToast('Напиши текст или добавь фото', 'error'); return; }
     if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
     if (images.some(img => img.uploading)) { showToast('Дождись загрузки фото', 'error'); return; }
