@@ -118,17 +118,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .style-opt.active.success{background:var(--green);border-color:var(--green);color:#fff}
 .style-opt.active.danger{background:var(--danger);border-color:var(--danger);color:#fff}
 .style-opt.active.default{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff}
-.preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;min-height:60px}
-.preview-box{overflow-wrap:anywhere}
-.preview-box p{margin:0 0 10px}.preview-box p:last-child{margin-bottom:0}
-.preview-box b,.preview-box strong{font-weight:800}.preview-box i,.preview-box em{font-style:italic}.preview-box u{ text-decoration:underline}.preview-box s,.preview-box del{ text-decoration:line-through}
-.preview-box code{background:rgba(255,255,255,.08);padding:2px 5px;border-radius:5px;font-family:monospace}.preview-box pre{background:#09090d;padding:10px;border-radius:8px;overflow:auto;white-space:pre-wrap}.preview-box blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--accent);background:rgba(47,128,237,.06);border-radius:4px}
-.preview-box tg-button{display:inline-flex;align-items:center;vertical-align:middle;margin:2px 3px;padding:5px 10px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;line-height:1.2;cursor:default;white-space:nowrap}
-.preview-box tg-button[style="success"]{background:var(--green)}.preview-box tg-button[style="danger"]{background:var(--danger)}.preview-box tg-button[style="link"]{background:transparent;color:var(--accent);padding:0}
-.preview-box tg-button-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.preview-box tg-button-row[align="center"]{justify-content:center}.preview-box tg-button-row[align="right"]{justify-content:flex-end}
-.preview-hint{margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5}
-
-.preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}
+.preview-wrap{margin-top:8px}.preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:14px;line-height:1.6;color:var(--text);word-break:break-word;overflow-wrap:anywhere;min-height:72px;box-sizing:border-box}.preview-box p{margin:0 0 10px}.preview-box p:last-child{margin-bottom:0}.preview-box b,.preview-box strong{font-weight:800}.preview-box i,.preview-box em{font-style:italic}.preview-box u{text-decoration:underline}.preview-box s,.preview-box del{text-decoration:line-through}.preview-box a{color:var(--accent);text-decoration:underline}.preview-box code{background:rgba(255,255,255,.08);padding:2px 5px;border-radius:5px;font-family:monospace;font-size:.92em}.preview-box pre{background:#09090d;padding:10px 12px;border-radius:8px;overflow:auto;white-space:pre-wrap;margin:8px 0;font-family:monospace}.preview-box blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--accent);background:rgba(47,128,237,.06);border-radius:4px}.preview-box tg-spoiler{background:rgba(255,255,255,.12);color:transparent;border-radius:4px;padding:0 4px;cursor:default}.preview-box tg-spoiler:hover{color:inherit}.preview-box tg-button{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin:2px 3px;padding:6px 11px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;line-height:1.2;cursor:default;white-space:nowrap;box-sizing:border-box;min-height:30px}.preview-box tg-button[type="url"]::before{content:'↗';font-size:11px;margin-right:5px;opacity:.8}.preview-box tg-button[type="callback_data"]::before{content:'●';font-size:8px;margin-right:6px;opacity:.8}.preview-box tg-button[style="success"]{background:var(--green);border-color:rgba(255,255,255,.12)}.preview-box tg-button[style="danger"]{background:var(--danger);border-color:rgba(255,255,255,.12)}.preview-box tg-button[style="link"]{background:transparent;color:var(--accent);border-color:transparent;padding-left:3px;padding-right:3px}.preview-box tg-button-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0}.preview-box tg-button-row[align="left"]{justify-content:flex-start}.preview-box tg-button-row[align="center"]{justify-content:center}.preview-box tg-button-row[align="right"]{justify-content:flex-end}.preview-box .preview-legacy-buttons{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px;padding-top:10px;border-top:1px dashed var(--border)}.preview-box .preview-legacy-label{width:100%;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;font-weight:800;text-align:center;margin-bottom:1px}.preview-box .preview-break{height:8px}.preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}.preview-hint{margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5}
 .section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;margin-top:20px}
 .section-title:first-child{margin-top:0}
 .toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:rgba(20,20,28,0.95);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:12px 20px;color:var(--text);font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s;max-width:90%;text-align:center}
@@ -257,7 +247,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                     </div>
 
                     <div class="section-title">Предпросмотр</div>
-                    <div class="preview-box" id="preview-box"></div><div class="preview-hint">Предпросмотр старается повторить Telegram: форматирование и кнопки показываются визуально. Кнопки здесь не нажимаются.</div>
+                    <div class="preview-wrap"><div class="preview-box" id="preview-box"></div><div class="preview-hint">Предпросмотр старается повторить Telegram: форматирование и кнопки показываются визуально. Кнопки здесь не нажимаются.</div></div>
                 </div>
 
                 <div class="editor-side">
@@ -359,8 +349,27 @@ let postTab = 'draft';
 let buttons = [];
 let images = [];
 
-async function apiGet(path) { const res = await fetch(SERVER_URL + path, { headers: { 'X-Telegram-Init-Data': tg?.initData || '' } }); return res.json(); }
-async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json','X-Telegram-Init-Data':tg?.initData || ''}, body:JSON.stringify(data) }); return res.json(); }
+async function apiGet(path) {
+    const res = await fetch(SERVER_URL + path, {
+        headers: { 'X-Telegram-Init-Data': tg?.initData || '' }
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    return data;
+}
+async function apiPost(path, data) {
+    const res = await fetch(SERVER_URL + path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Telegram-Init-Data': tg?.initData || ''
+        },
+        body: JSON.stringify(data)
+    });
+    const result = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(result.error || `HTTP ${res.status}`);
+    return result;
+}
 
 /* ==================== DATA ==================== */
 async function loadChannels() {
@@ -505,14 +514,78 @@ function editPost(postId) {
 }
 
 function updatePreview() {
-    const text = document.getElementById('editor-text').value;
+    const text = document.getElementById('editor-text').value || '';
     const box = document.getElementById('preview-box');
-    if (!text) { box.innerHTML = ''; return; }
-    // Telegram accepts HTML directly for Rich Messages. For the browser preview we
-    // only add visual handling for line breaks and the new tg-button elements.
-    box.innerHTML = text.replace(/\n/g, '<br>');
+
+    // Не даём произвольному HTML/JS из редактора исполняться в WebApp.
+    // При этом сохраняем Telegram-подобные теги и Rich-кнопки.
+    const safeHtml = sanitizePreviewHtml(text);
+    box.innerHTML = safeHtml;
+
+    // Старый конструктор кнопок хранится отдельно от текста.
+    // Показываем его тоже, чтобы предпросмотр совпадал с тем,
+    // что реально уйдёт в канал.
+    const legacy = buttons.filter(b => b && b.text && (b.url || b.callback));
+    if (legacy.length) {
+        const wrap = document.createElement('div');
+        wrap.className = 'preview-legacy-buttons';
+
+        const label = document.createElement('div');
+        label.className = 'preview-legacy-label';
+        label.textContent = 'Кнопки из конструктора';
+        wrap.appendChild(label);
+
+        legacy.forEach(b => {
+            const btn = document.createElement('tg-button');
+            btn.textContent = b.text;
+            btn.setAttribute('type', b.type === 'callback' ? 'callback_data' : 'url');
+            btn.setAttribute('style', ['primary','success','danger','link'].includes(b.style) ? b.style : 'primary');
+            wrap.appendChild(btn);
+        });
+        box.appendChild(wrap);
+    }
 }
 
+function sanitizePreviewHtml(source) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(`<div>${source}</div>`, 'text/html');
+    const root = doc.body.firstElementChild;
+
+    // Удаляем потенциально опасные элементы.
+    root.querySelectorAll('script,style,iframe,object,embed,form,video,audio,svg,math').forEach(el => el.remove());
+
+    root.querySelectorAll('*').forEach(el => {
+        [...el.attributes].forEach(attr => {
+            const name = attr.name.toLowerCase();
+            const value = attr.value.trim();
+            if (name.startsWith('on')) el.removeAttribute(attr.name);
+            if ((name === 'href' || name === 'src' || name === 'url' || name === 'data') && /^javascript:/i.test(value)) {
+                el.removeAttribute(attr.name);
+            }
+        });
+    });
+
+    // DOMParser сохраняет переводы строк как текстовые узлы.
+    // Превращаем их в <br>, но не внутри <pre> и не внутри <tg-button-row>.
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) nodes.push(node);
+    nodes.forEach(textNode => {
+        const parent = textNode.parentElement;
+        if (!parent || parent.closest('pre, tg-button-row')) return;
+        if (!textNode.nodeValue.includes('\n')) return;
+        const frag = document.createDocumentFragment();
+        const parts = textNode.nodeValue.split(/\r?\n/);
+        parts.forEach((part, i) => {
+            if (i) frag.appendChild(document.createElement('br'));
+            frag.appendChild(document.createTextNode(part));
+        });
+        textNode.replaceWith(frag);
+    });
+
+    return root.innerHTML;
+}
 function insertAtCursor(value) {
     const ta = document.getElementById('editor-text');
     const start = ta.selectionStart;
@@ -688,7 +761,7 @@ async function handleImageUpload(event) {
     }
 }
 
-function removeImage(i) { images.splice(i, 1); renderImages(); }
+function removeImage(i) { images.splice(i, 1); renderImages(); updatePreview(); }
 
 /* ==================== BUTTONS BUILDER ==================== */
 function renderBtnBuilder() {
@@ -728,9 +801,10 @@ function renderBtnBuilder() {
 function addButton() {
     buttons.push({ text: '', type: 'url', url: '', callback: '', style: 'primary' });
     renderBtnBuilder();
+    updatePreview();
 }
-function removeButton(i) { buttons.splice(i, 1); renderBtnBuilder(); }
-function updateButton(i, key, value) { if (buttons[i]) buttons[i][key] = value; }
+function removeButton(i) { buttons.splice(i, 1); renderBtnBuilder(); updatePreview(); }
+function updateButton(i, key, value) { if (buttons[i]) { buttons[i][key] = value; updatePreview(); } }
 
 /* ==================== POST DATA ==================== */
 function getSelectedChannels() {
@@ -761,14 +835,18 @@ async function saveDraft() {
     post.status = 'draft';
     post.scheduledAt = null;
     
-    if (currentPost) {
-        await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
-    } else {
-        await apiPost('/api/posts/create', { userId: user.id, post });
+    try {
+        if (currentPost) {
+            await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
+        } else {
+            await apiPost('/api/posts/create', { userId: user.id, post });
+        }
+        showToast('Черновик сохранён', 'success');
+        await loadPosts();
+        showPage('posts');
+    } catch (e) {
+        showToast(e.message || 'Ошибка сохранения', 'error');
     }
-    showToast('Черновик сохранён', 'success');
-    await loadPosts();
-    showPage('posts');
 }
 
 async function publishNow() {
@@ -781,14 +859,19 @@ async function publishNow() {
     if (!confirm(`Опубликовать в ${post.channels.length} канал(ов)?`)) return;
     
     showToast('Публикуем...');
-    const result = await apiPost('/api/posts/publish-direct', { userId: user.id, post });
-    if (result.success) {
-        const okCount = result.results.filter(r => r.ok).length;
-        showToast(`Опубликовано: ${okCount}/${result.results.length}`, 'success');
-        await loadPosts();
-        showPage('posts');
-    } else {
-        showToast('Ошибка публикации', 'error');
+    try {
+        const result = await apiPost('/api/posts/publish-direct', { userId: user.id, post });
+        const okCount = (result.results || []).filter(r => r.ok).length;
+        const total = (result.results || []).length;
+        if (result.success) {
+            showToast(`Опубликовано: ${okCount}/${total}`, 'success');
+            await loadPosts();
+            showPage('posts');
+        } else {
+            showToast(`Опубликовано: ${okCount}/${total}. Есть ошибки`, 'error');
+        }
+    } catch (e) {
+        showToast(e.message || 'Ошибка публикации', 'error');
     }
 }
 
@@ -797,16 +880,22 @@ async function schedulePost() {
     if (!post.text) { showToast('Напиши текст', 'error'); return; }
     if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
     if (!post.scheduledAt) { showToast('Установи дату', 'error'); return; }
+    if (post.scheduledAt <= Date.now()) { showToast('Дата должна быть в будущем', 'error'); return; }
+    if (images.some(img => img.uploading)) { showToast('Дождись загрузки фото', 'error'); return; }
     post.status = 'scheduled';
-    
-    if (currentPost) {
-        await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
-    } else {
-        await apiPost('/api/posts/create', { userId: user.id, post });
+
+    try {
+        if (currentPost) {
+            await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
+        } else {
+            await apiPost('/api/posts/create', { userId: user.id, post });
+        }
+        showToast('Запланировано', 'success');
+        await loadPosts();
+        showPage('posts');
+    } catch (e) {
+        showToast(e.message || 'Ошибка планирования', 'error');
     }
-    showToast('Запланировано', 'success');
-    await loadPosts();
-    showPage('posts');
 }
 
 async function deleteChannel(channelId) {
