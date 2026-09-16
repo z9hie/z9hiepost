@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Z9hiePost</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+:root{--bg:#0a0a0f;--bg-card:#14141c;--bg-card-hover:#1c1c26;--bg-elevated:#1a1a24;--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text:#fff;--text-secondary:#8a8a9e;--text-muted:#4a4a5e;--accent:#2f80ed;--accent-hover:#4a9eff;--accent-glow:rgba(47,128,237,0.35);--green:#22c55e;--green-bg:rgba(34,197,94,0.12);--danger:#ef4444;--danger-bg:rgba(239,68,68,0.12);--warning:#eab308;--purple:#a855f7;--radius:16px;--radius-sm:12px;--header-h:60px}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+.app{min-height:100vh;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+.header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 20px;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-mark{width:34px;height:34px;background:linear-gradient(135deg,#2f80ed,#a855f7);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px var(--accent-glow);flex-shrink:0}
+.brand-mark svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.2}
+.brand-name{font-size:17px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap}
+.brand-name span{color:var(--text-muted);font-weight:600}
+.header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.icon-btn{width:36px;height:36px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:all 0.2s;font-family:inherit}
+.icon-btn:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+.icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
+.main{flex:1;width:100%;max-width:900px;margin:0 auto;padding:20px 20px 100px}
+.page{display:none}
+.page.active{display:block;animation:pageIn 0.3s cubic-bezier(0.16,1,0.3,1)}
+@keyframes pageIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.page-head h2{font-size:24px;font-weight:900;letter-spacing:-0.8px}
+.tabs{display:flex;gap:6px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:10px 18px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;font-size:13px;font-weight:700;color:var(--text-secondary);cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s}
+.tab:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:13px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:all 0.2s;box-shadow:0 6px 20px var(--accent-glow);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:active{transform:scale(0.98)}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;box-shadow:none}
+.btn-primary.green{background:var(--green);box-shadow:0 6px 20px rgba(34,197,94,0.4)}
+.btn-primary.green:hover{background:#16a34a}
+.btn-primary svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
+.btn-secondary{width:100%;padding:15px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:13px;color:var(--text-secondary);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;margin-top:10px}
+.btn-secondary:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:all 0.2s}
+.card.clickable{cursor:pointer}
+.card.clickable:hover{background:var(--bg-card-hover);border-color:var(--border-hover)}
+.empty{text-align:center;padding:60px 20px}
+.empty-icon{width:70px;height:70px;margin:0 auto 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:20px;display:flex;align-items:center;justify-content:center}
+.empty-icon svg{width:28px;height:28px;stroke:var(--text-muted);fill:none;stroke-width:1.5}
+.empty-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.empty-text{font-size:12px;color:var(--text-muted);line-height:1.5}
+.channel-card{display:flex;align-items:center;gap:12px}
+.channel-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2f80ed,#a855f7);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;flex-shrink:0}
+.channel-info{flex:1;min-width:0}
+.channel-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.channel-username{font-size:12px;color:var(--text-muted);font-weight:600;margin-top:2px}
+.post-card{cursor:pointer}
+.post-header{display:flex;align-items:start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.post-text-preview{font-size:13px;line-height:1.5;color:var(--text);flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-wrap;word-break:break-word}
+.post-status{font-size:10px;font-weight:800;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;flex-shrink:0}
+.post-status.draft{background:rgba(255,255,255,0.06);color:var(--text-muted)}
+.post-status.scheduled{background:rgba(234,179,8,0.15);color:var(--warning)}
+.post-status.published{background:var(--green-bg);color:var(--green)}
+.post-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-muted);font-weight:600}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.form-input,.form-textarea,.form-select{width:100%;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent)}
+.form-textarea{resize:vertical;min-height:150px;font-family:'SF Mono',Monaco,monospace;font-size:13px;line-height:1.6}
+.form-select{cursor:pointer}
+.channels-list{display:flex;flex-direction:column;gap:6px}
+.channel-check{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;cursor:pointer;transition:all 0.2s}
+.channel-check:has(input:checked){border-color:var(--accent);background:rgba(47,128,237,0.08)}
+.channel-check input{accent-color:var(--accent);flex-shrink:0;width:18px;height:18px;cursor:pointer}
+.channel-check-info{flex:1;min-width:0}
+.channel-check-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.channel-check-username{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:2px}
+.btn-builder{margin-bottom:12px}
+.btn-item{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px}
+.btn-item-row{display:flex;gap:8px;align-items:center}
+.btn-item-input{flex:1;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;font-family:inherit;outline:none}
+.btn-item-input:focus{border-color:var(--accent)}
+.btn-remove{width:32px;height:32px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--danger);flex-shrink:0;font-family:inherit;font-size:16px}
+.btn-remove:hover{background:rgba(239,68,68,0.2)}
+.style-picker{display:flex;gap:6px;flex-wrap:wrap}
+.style-opt{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text-secondary);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.style-opt.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.style-opt.primary.active{background:var(--accent)}
+.style-opt.success.active{background:var(--green)}
+.style-opt.danger.active{background:var(--danger)}
+.preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;font-family:'SF Mono',Monaco,monospace}
+.preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}
+.section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;margin-top:20px}
+.section-title:first-child{margin-top:0}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:500;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:400px;width:100%;max-height:88vh;overflow-y:auto;animation:modalIn 0.3s cubic-bezier(0.16,1,0.3,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(0.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal h3{font-size:18px;font-weight:900;letter-spacing:-0.5px;margin-bottom:16px}
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:rgba(20,20,28,0.95);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:12px 20px;color:var(--text);font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s;max-width:90%;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(34,197,94,0.4);color:var(--green)}
+.toast.error{border-color:rgba(239,68,68,0.4);color:var(--danger)}
+.loading{display:flex;align-items:center;justify-content:center;padding:60px 20px;color:var(--text-muted);font-size:13px;font-weight:600}
+@media (max-width:480px){
+.main{padding:16px 16px 100px}
+.page-head h2{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+    <header class="header">
+        <div class="brand">
+            <div class="brand-mark">
+                <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div class="brand-name">Z9hie<span>Post</span></div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="openNewPost()" title="Новый пост">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <button class="icon-btn" onclick="reloadData()" title="Обновить">
+                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- CHANNELS PAGE -->
+        <div class="page active" id="page-channels">
+            <div class="page-head">
+                <h2>Мои каналы</h2>
+                <span style="font-size:12px;color:var(--text-muted);font-weight:700;" id="channels-count">0</span>
+            </div>
+            <div id="channels-list"></div>
+            <div style="margin-top:20px;padding:16px;background:rgba(47,128,237,0.06);border:1px solid rgba(47,128,237,0.2);border-radius:14px;">
+                <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:6px;">💡 Как добавить канал</div>
+                <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+                    1. Добавь @z9hiepostbot в канал как админа<br>
+                    2. Перешли любой пост из канала боту в ЛС<br>
+                    3. Или отправь ссылку t.me/channelname
+                </div>
+            </div>
+        </div>
+
+        <!-- POSTS PAGE -->
+        <div class="page" id="page-posts">
+            <div class="page-head">
+                <h2>Мои посты</h2>
+                <span style="font-size:12px;color:var(--text-muted);font-weight:700;" id="posts-count">0</span>
+            </div>
+            <button class="btn-primary" onclick="openNewPost()" style="margin-bottom:20px;">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Новый пост
+            </button>
+            <div class="tabs">
+                <button class="tab active" data-tab="draft" onclick="setPostTab('draft')">Черновики</button>
+                <button class="tab" data-tab="scheduled" onclick="setPostTab('scheduled')">Запланированные</button>
+                <button class="tab" data-tab="published" onclick="setPostTab('published')">Опубликованные</button>
+            </div>
+            <div id="posts-list"></div>
+        </div>
+
+        <!-- EDITOR PAGE -->
+        <div class="page" id="page-editor">
+            <div class="page-head">
+                <h2 id="editor-title">Новый пост</h2>
+                <button class="icon-btn" onclick="showPage('posts')" title="Назад">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Текст поста (HTML/Markdown)</label>
+                <textarea class="form-textarea" id="editor-text" placeholder="<b>Жирный</b>, <i>курсив</i>, <a href='...'>ссылка</a>&#10;&#10;Поддерживается HTML-разметка" oninput="updatePreview()"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">URL фото (опционально)</label>
+                <input type="text" class="form-input" id="editor-image" placeholder="https://..." oninput="updatePreview()">
+            </div>
+
+            <div class="section-title">Кнопки</div>
+            <div class="btn-builder" id="btn-builder"></div>
+            <button class="btn-secondary" onclick="addButton()" style="margin-bottom:20px;">
+                <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;vertical-align:middle;margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Добавить кнопку
+            </button>
+
+            <div class="section-title">Каналы для публикации</div>
+            <div class="channels-list" id="editor-channels"></div>
+
+            <div class="section-title">Публикация</div>
+            <div class="form-group">
+                <label class="form-label">Запланировать (опционально)</label>
+                <input type="datetime-local" class="form-input" id="editor-schedule">
+            </div>
+
+            <div class="section-title">Предпросмотр</div>
+            <div class="preview-box" id="preview-box"></div>
+
+            <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
+                <button class="btn-primary green" onclick="publishNow()">
+                    <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Опубликовать сейчас
+                </button>
+                <button class="btn-secondary" onclick="saveDraft()">💾 Сохранить как черновик</button>
+                <button class="btn-secondary" onclick="schedulePost()" id="schedule-btn" style="display:none;">📅 Запланировать</button>
+            </div>
+        </div>
+
+        <!-- HELP PAGE -->
+        <div class="page" id="page-help">
+            <div class="page-head"><h2>Помощь</h2></div>
+            <div class="card">
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📝 HTML-разметка</div>
+                <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;b&gt;жирный&lt;/b&gt;</code> → <b>жирный</b><br>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;i&gt;курсив&lt;/i&gt;</code> → <i>курсив</i><br>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;u&gt;подчёркнутый&lt;/u&gt;</code><br>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;s&gt;зачёркнутый&lt;/s&gt;</code><br>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;a href="url"&gt;ссылка&lt;/a&gt;</code><br>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;code&gt;код&lt;/code&gt;</code><br>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;pre&gt;блок кода&lt;/pre&gt;</code>
+                </div>
+            </div>
+            <div class="card">
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🎨 Цветные кнопки</div>
+                <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+                    🔵 <b>primary</b> — синяя<br>
+                    🟢 <b>success</b> — зелёная<br>
+                    🔴 <b>danger</b> — красная
+                </div>
+            </div>
+            <div class="card">
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📅 Планирование</div>
+                <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+                    Установи дату и время → пост опубликуется автоматически. Проверка каждые 5 минут.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:448px;background:rgba(20,20,28,0.92);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:20px;display:flex;justify-content:space-around;padding:8px 6px;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,0.5);margin-bottom:env(safe-area-inset-bottom);" id="bottom-nav">
+        <button class="nav-btn" data-page="channels" onclick="showPage('channels')" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit;">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--text-muted);fill:none;stroke-width:2;"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span style="font-size:9px;font-weight:800;color:var(--text-muted);text-transform:uppercase;">Каналы</span>
+        </button>
+        <button class="nav-btn active" data-page="posts" onclick="showPage('posts')" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit;">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span style="font-size:9px;font-weight:800;color:var(--accent);text-transform:uppercase;">Посты</span>
+        </button>
+        <button class="nav-btn" data-page="help" onclick="showPage('help')" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit;">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--text-muted);fill:none;stroke-width:2;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span style="font-size:9px;font-weight:800;color:var(--text-muted);text-transform:uppercase;">Помощь</span>
+        </button>
+    </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const tg = window.Telegram?.WebApp;
+if (tg) { tg.ready(); tg.expand(); if (tg.setHeaderColor) tg.setHeaderColor('#0a0a0f'); if (tg.setBackgroundColor) tg.setBackgroundColor('#0a0a0f'); if (tg.disableVerticalSwipes) tg.disableVerticalSwipes(); }
+
+const SERVER_URL = "https://z9hiepost.z9hie.workers.dev";
+const user = tg?.initDataUnsafe?.user || { first_name: 'Гость', username: 'guest', id: 0 };
+const ADMIN_ID = 5640325235;
+const isAdmin = user.id === ADMIN_ID;
+
+let channels = [];
+let posts = [];
+let currentPost = null;
+let postTab = 'draft';
+let buttons = [];
+
+async function apiGet(path) { const res = await fetch(SERVER_URL + path); return res.json(); }
+async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }); return res.json(); }
+
+async function loadChannels() {
+    try {
+        const data = await apiGet(`/api/channels?userId=${user.id}`);
+        channels = data.channels || [];
+        renderChannels();
+        renderEditorChannels();
+        document.getElementById('channels-count').textContent = channels.length;
+    } catch(e) { showToast('Ошибка загрузки каналов', 'error'); }
+}
+
+async function loadPosts() {
+    try {
+        const data = await apiGet(`/api/posts?userId=${user.id}`);
+        posts = data.posts || [];
+        renderPosts();
+        document.getElementById('posts-count').textContent = posts.length;
+    } catch(e) { showToast('Ошибка загрузки постов', 'error'); }
+}
+
+function renderChannels() {
+    const el = document.getElementById('channels-list');
+    if (channels.length === 0) {
+        el.innerHTML = `<div class="empty">
+            <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <div class="empty-title">Нет каналов</div>
+            <div class="empty-text">Добавь бота в канал и перешли пост</div>
+        </div>`;
+        return;
+    }
+    el.innerHTML = channels.map(ch => `
+        <div class="card channel-card">
+            <div class="channel-avatar">${(ch.title || '?')[0].toUpperCase()}</div>
+            <div class="channel-info">
+                <div class="channel-name">${ch.title}</div>
+                <div class="channel-username">${ch.username ? '@' + ch.username : 'ID: ' + ch.id}</div>
+            </div>
+            <button class="icon-btn" onclick="deleteChannel('${ch.id}')" title="Удалить" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:var(--danger);">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            </button>
+        </div>
+    `).join('');
+}
+
+function renderEditorChannels() {
+    const el = document.getElementById('editor-channels');
+    if (channels.length === 0) {
+        el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">Сначала добавь канал</div>';
+        return;
+    }
+    el.innerHTML = channels.map(ch => `
+        <label class="channel-check">
+            <input type="checkbox" value="${ch.id}" class="editor-channel-check">
+            <div class="channel-check-info">
+                <div class="channel-check-name">${ch.title}</div>
+                <div class="channel-check-username">${ch.username ? '@' + ch.username : 'ID: ' + ch.id}</div>
+            </div>
+        </label>
+    `).join('');
+}
+
+function renderPosts() {
+    const el = document.getElementById('posts-list');
+    const filtered = posts.filter(p => p.status === postTab);
+    
+    if (filtered.length === 0) {
+        el.innerHTML = `<div class="empty">
+            <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div class="empty-title">Пусто</div>
+            <div class="empty-text">${postTab === 'draft' ? 'Создай первый пост' : postTab === 'scheduled' ? 'Нет запланированных' : 'Нет опубликованных'}</div>
+        </div>`;
+        return;
+    }
+    
+    el.innerHTML = filtered.map(p => {
+        const date = new Date(p.createdAt).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+        const statusText = { draft: 'Черновик', scheduled: 'Запланирован', published: 'Опубликован' }[p.status] || p.status;
+        return `<div class="card post-card" onclick="editPost('${p.id}')">
+            <div class="post-header">
+                <div class="post-text-preview">${(p.text || 'Без текста').substring(0, 100)}</div>
+                <div class="post-status ${p.status}">${statusText}</div>
+            </div>
+            <div class="post-meta">
+                <span>📅 ${date}</span>
+                ${p.channels && p.channels.length ? `<span>📢 ${p.channels.length} кан.</span>` : ''}
+                ${p.buttons && p.buttons.length ? `<span>🔘 ${p.buttons.length} кноп.</span>` : ''}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function setPostTab(tab) {
+    postTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    renderPosts();
+}
+
+function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById('page-' + name);
+    if (page) page.classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => {
+        const active = b.dataset.page === name;
+        b.querySelector('svg').style.stroke = active ? 'var(--accent)' : 'var(--text-muted)';
+        b.querySelector('span').style.color = active ? 'var(--accent)' : 'var(--text-muted)';
+    });
+    window.scrollTo(0, 0);
+}
+
+function openNewPost() {
+    currentPost = null;
+    buttons = [];
+    document.getElementById('editor-title').textContent = 'Новый пост';
+    document.getElementById('editor-text').value = '';
+    document.getElementById('editor-image').value = '';
+    document.getElementById('editor-schedule').value = '';
+    renderEditorChannels();
+    renderBtnBuilder();
+    updatePreview();
+    showPage('editor');
+}
+
+function editPost(postId) {
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+    currentPost = post;
+    buttons = post.buttons ? JSON.parse(JSON.stringify(post.buttons)) : [];
+    document.getElementById('editor-title').textContent = 'Редактировать';
+    document.getElementById('editor-text').value = post.text || '';
+    document.getElementById('editor-image').value = (post.images && post.images[0]) || '';
+    document.getElementById('editor-schedule').value = post.scheduledAt ? new Date(post.scheduledAt).toISOString().slice(0, 16) : '';
+    renderEditorChannels();
+    // Отмечаем каналы
+    setTimeout(() => {
+        document.querySelectorAll('.editor-channel-check').forEach(cb => {
+            cb.checked = post.channels && post.channels.includes(cb.value);
+        });
+    }, 50);
+    renderBtnBuilder();
+    updatePreview();
+    showPage('editor');
+}
+
+function updatePreview() {
+    const text = document.getElementById('editor-text').value;
+    const box = document.getElementById('preview-box');
+    box.innerHTML = text || '';
+}
+
+function renderBtnBuilder() {
+    const el = document.getElementById('btn-builder');
+    if (buttons.length === 0) {
+        el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">Нет кнопок</div>';
+        return;
+    }
+    el.innerHTML = buttons.map((b, i) => `
+        <div class="btn-item">
+            <div class="btn-item-row">
+                <input type="text" class="btn-item-input" placeholder="Текст кнопки" value="${b.text || ''}" oninput="updateButton(${i}, 'text', this.value)">
+                <button class="btn-remove" onclick="removeButton(${i})">×</button>
+            </div>
+            <div class="btn-item-row">
+                <select class="btn-item-input" onchange="updateButton(${i}, 'type', this.value)">
+                    <option value="url" ${b.type === 'url' ? 'selected' : ''}>URL-ссылка</option>
+                    <option value="callback" ${b.type === 'callback' ? 'selected' : ''}>Callback</option>
+                </select>
+            </div>
+            <div class="btn-item-row">
+                <input type="text" class="btn-item-input" placeholder="${b.type === 'callback' ? 'callback_data' : 'https://...'}" value="${b.type === 'callback' ? (b.callback || '') : (b.url || '')}" oninput="updateButton(${i}, '${b.type === 'callback' ? 'callback' : 'url'}', this.value)">
+            </div>
+            <div class="style-picker">
+                <button class="style-opt ${b.style === 'primary' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'primary')">🔵 Синяя</button>
+                <button class="style-opt success ${b.style === 'success' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'success')">🟢 Зелёная</button>
+                <button class="style-opt danger ${b.style === 'danger' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'danger')">🔴 Красная</button>
+                <button class="style-opt ${!b.style ? 'active' : ''}" onclick="updateButton(${i}, 'style', '')">⚪ Обычная</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function addButton() { buttons.push({ text: '', type: 'url', url: '', style: 'primary' }); renderBtnBuilder(); }
+function removeButton(i) { buttons.splice(i, 1); renderBtnBuilder(); }
+function updateButton(i, key, value) { buttons[i][key] = value; if (key === 'type') renderBtnBuilder(); }
+
+function getSelectedChannels() {
+    const checks = document.querySelectorAll('.editor-channel-check:checked');
+    return Array.from(checks).map(cb => cb.value);
+}
+
+function getPostData() {
+    return {
+        text: document.getElementById('editor-text').value,
+        images: document.getElementById('editor-image').value ? [document.getElementById('editor-image').value] : [],
+        buttons: buttons.filter(b => b.text && (b.url || b.callback)),
+        channels: getSelectedChannels(),
+        scheduledAt: document.getElementById('editor-schedule').value ? new Date(document.getElementById('editor-schedule').value).getTime() : null
+    };
+}
+
+async function saveDraft() {
+    const post = getPostData();
+    if (!post.text && post.images.length === 0) { showToast('Напиши текст', 'error'); return; }
+    
+    if (currentPost) {
+        post.status = 'draft';
+        post.scheduledAt = null;
+        await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
+    } else {
+        post.status = 'draft';
+        await apiPost('/api/posts/create', { userId: user.id, post });
+    }
+    
+    showToast('Черновик сохранён', 'success');
+    await loadPosts();
+    showPage('posts');
+}
+
+async function publishNow() {
+    const post = getPostData();
+    if (!post.text && post.images.length === 0) { showToast('Напиши текст', 'error'); return; }
+    if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
+    
+    if (!confirm('Опубликовать во ' + post.channels.length + ' канал(ов)?')) return;
+    
+    showToast('Публикуем...');
+    const result = await apiPost('/api/posts/publish-direct', { userId: user.id, post });
+    
+    if (result.success) {
+        const okCount = result.results.filter(r => r.ok).length;
+        showToast(`Опубликовано: ${okCount}/${result.results.length}`, 'success');
+        await loadPosts();
+        showPage('posts');
+    } else {
+        showToast('Ошибка публикации', 'error');
+    }
+}
+
+async function schedulePost() {
+    const post = getPostData();
+    if (!post.text) { showToast('Напиши текст', 'error'); return; }
+    if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
+    if (!post.scheduledAt) { showToast('Установи дату', 'error'); return; }
+    
+    if (currentPost) {
+        post.status = 'scheduled';
+        await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
+    } else {
+        post.status = 'scheduled';
+        await apiPost('/api/posts/create', { userId: user.id, post });
+    }
+    
+    showToast('Запланировано', 'success');
+    await loadPosts();
+    showPage('posts');
+}
+
+async function deleteChannel(channelId) {
+    if (!confirm('Удалить канал?')) return;
+    await apiPost('/api/channels/delete', { userId: user.id, channelId });
+    showToast('Удалён', 'success');
+    await loadChannels();
+}
+
+async function reloadData() {
+    await Promise.all([loadChannels(), loadPosts()]);
+    showToast('Обновлено', 'success');
+}
+
+function showToast(text, type = '') {
+    const toast = document.getElementById('toast');
+    toast.textContent = text;
+    toast.className = 'toast show ' + type;
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// Проверка кнопки планирования
+setInterval(() => {
+    const scheduleInput = document.getElementById('editor-schedule');
+    const scheduleBtn = document.getElementById('schedule-btn');
+    if (scheduleInput && scheduleBtn) {
+        scheduleBtn.style.display = scheduleInput.value ? 'block' : 'none';
+    }
+}, 500);
+
+// Init
+loadChannels();
+loadPosts();
+</script>
+</body>
+</html>
