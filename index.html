@@ -118,6 +118,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .style-opt.active.success{background:var(--green);border-color:var(--green);color:#fff}
 .style-opt.active.danger{background:var(--danger);border-color:var(--danger);color:#fff}
 .style-opt.active.default{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff}
+/* PREVIEW */
 .preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;min-height:60px}
 .preview-box{overflow-wrap:anywhere}
 .preview-box p{margin:0 0 10px}.preview-box p:last-child{margin-bottom:0}
@@ -126,9 +127,16 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .preview-box tg-button{display:inline-flex;align-items:center;vertical-align:middle;margin:2px 3px;padding:5px 10px;border-radius:8px;background:var(--accent);color:#fff;font-size:12px;font-weight:800;line-height:1.2;cursor:default;white-space:nowrap}
 .preview-box tg-button[style="success"]{background:var(--green)}.preview-box tg-button[style="danger"]{background:var(--danger)}.preview-box tg-button[style="link"]{background:transparent;color:var(--accent);padding:0}
 .preview-box tg-button-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.preview-box tg-button-row[align="center"]{justify-content:center}.preview-box tg-button-row[align="right"]{justify-content:flex-end}
+.preview-box tg-spoiler{background:rgba(255,255,255,0.08);border-radius:4px;padding:1px 4px;cursor:pointer}
 .preview-hint{margin-top:8px;font-size:11px;color:var(--text-muted);line-height:1.5}
-
 .preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}
+/* PREVIEW DEVICE TOGGLE */
+.preview-device-toggle{display:flex;gap:6px;margin-bottom:8px}
+.preview-device-btn{padding:6px 12px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text-muted);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.preview-device-btn:hover{background:rgba(255,255,255,0.06)}
+.preview-device-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.preview-box.device-phone{max-width:340px;margin:0 auto}
+.preview-box.device-desktop{max-width:600px}
 .section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;margin-top:20px}
 .section-title:first-child{margin-top:0}
 .toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:rgba(20,20,28,0.95);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:12px 20px;color:var(--text);font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s;max-width:90%;text-align:center}
@@ -230,7 +238,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
             <div class="editor-layout">
                 <div class="editor-main">
                     <div class="form-group">
-                        <label class="form-label">Текст поста</label>
+                        <label class="form-label">Текст поста (Bot API 10.3 Rich Message)</label>
                         <div class="toolbar">
                             <button class="tool-btn" onclick="fmt('bold')" title="Жирный"><b>B</b></button>
                             <button class="tool-btn" onclick="fmt('italic')" title="Курсив"><i>I</i></button>
@@ -243,11 +251,11 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                             <button class="tool-btn" onclick="fmt('spoiler')" title="Спойлер"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                             <button class="tool-btn" onclick="fmt('quote')" title="Цитата">❝</button>
                             <div class="tool-sep"></div>
-                            <button class="tool-btn" onclick="insertInlineButton()" title="Кнопка внутри текста">🔘</button>
-                            <button class="tool-btn" onclick="insertButtonRow()" title="Ряд кнопок">▦</button>
+                            <button class="tool-btn" onclick="insertInlineButton()" title="Кнопка внутри текста (tg-button)">🔘</button>
+                            <button class="tool-btn" onclick="insertButtonRow()" title="Ряд кнопок (tg-button-row)">▦</button>
                             <button class="tool-btn" onclick="toggleEmoji()" title="Эмодзи">😀</button>
                         </div>
-                        <textarea class="form-textarea" id="editor-text" placeholder="Напиши текст поста..." oninput="updatePreview()"></textarea>
+                        <textarea class="form-textarea" id="editor-text" placeholder="Напиши текст поста...&#10;&#10;Используй 🔘 чтобы вставить кнопку прямо в текст." oninput="updatePreview()"></textarea>
                         <div class="emoji-picker" id="emoji-picker"></div>
                     </div>
 
@@ -257,17 +265,15 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                     </div>
 
                     <div class="section-title">Предпросмотр</div>
-                    <div class="preview-box" id="preview-box"></div><div class="preview-hint">Предпросмотр старается повторить Telegram: форматирование и кнопки показываются визуально. Кнопки здесь не нажимаются.</div>
+                    <div class="preview-device-toggle">
+                        <button class="preview-device-btn active" data-device="phone" onclick="setPreviewDevice('phone')">📱 Телефон</button>
+                        <button class="preview-device-btn" data-device="desktop" onclick="setPreviewDevice('desktop')">🖥 ПК</button>
+                    </div>
+                    <div class="preview-box device-phone" id="preview-box"></div>
+                    <div class="preview-hint">Предпросмотр показывает Rich Message с кнопками внутри текста (Bot API 10.3). Цвета кнопок соответствуют style.</div>
                 </div>
 
                 <div class="editor-side">
-                    <div class="section-title">Кнопки</div>
-                    <div class="btn-builder" id="btn-builder"></div>
-                    <button class="btn-secondary" onclick="addButton()" style="margin-bottom:0;">
-                        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Добавить кнопку
-                    </button>
-
                     <div class="section-title">Каналы</div>
                     <div class="channels-list" id="editor-channels"></div>
 
@@ -293,18 +299,23 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
         <div class="page" id="page-help">
             <div class="page-head"><h2>Помощь</h2></div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📝 Форматирование</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🔘 Кнопки внутри текста (Bot API 10.3)</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    Используй <b>панель инструментов</b> над текстом — она вставляет теги автоматически. Или пиши HTML вручную:
-                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;b&gt;жирный&lt;/b&gt;</code>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;i&gt;курсив&lt;/i&gt;</code>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;a href="url"&gt;ссылка&lt;/a&gt;</code>
+                    Нажми <b>🔘</b> в панели инструментов, чтобы вставить кнопку прямо в текст. Или пиши вручную:
+                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;">&lt;tg-button type="url" style="primary" url="https://..."&gt;Текст&lt;/tg-button&gt;</code>
                 </div>
             </div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🎨 Цветные кнопки</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">▦ Ряд кнопок</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    🔵 <b>Синяя</b> (primary) · 🟢 <b>Зелёная</b> (success) · 🔴 <b>Красная</b> (danger)
+                    Кнопки можно группировать в ряды — они будут отображаться под текстом или в потоке:
+                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:11px;">&lt;tg-button-row align="center"&gt;...&lt;/tg-button-row&gt;</code>
+                </div>
+            </div>
+            <div class="card">
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🎨 Цвета кнопок</div>
+                <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+                    🔵 <b>primary</b> · 🟢 <b>success</b> · 🔴 <b>danger</b> · 🔗 <b>link</b> (без фона)
                 </div>
             </div>
             <div class="card">
@@ -356,8 +367,8 @@ let channels = [];
 let posts = [];
 let currentPost = null;
 let postTab = 'draft';
-let buttons = [];
 let images = [];
+let previewDevice = 'phone';
 
 async function apiGet(path) { const res = await fetch(SERVER_URL + path, { headers: { 'X-Telegram-Init-Data': tg?.initData || '' } }); return res.json(); }
 async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json','X-Telegram-Init-Data':tg?.initData || ''}, body:JSON.stringify(data) }); return res.json(); }
@@ -444,7 +455,6 @@ function renderPosts() {
             <div class="post-meta">
                 <span>📅 ${date}</span>
                 ${p.channels && p.channels.length ? `<span>📢 ${p.channels.length}</span>` : ''}
-                ${p.buttons && p.buttons.length ? `<span>🔘 ${p.buttons.length}</span>` : ''}
                 ${p.images && p.images.length ? `<span>📸 ${p.images.length}</span>` : ''}
             </div>
         </div>`;
@@ -466,16 +476,23 @@ function showPage(name) {
     window.scrollTo(0, 0);
 }
 
+/* ==================== PREVIEW DEVICE ==================== */
+function setPreviewDevice(device) {
+    previewDevice = device;
+    document.querySelectorAll('.preview-device-btn').forEach(b => b.classList.toggle('active', b.dataset.device === device));
+    const box = document.getElementById('preview-box');
+    box.classList.remove('device-phone', 'device-desktop');
+    box.classList.add('device-' + device);
+}
+
 /* ==================== EDITOR ==================== */
 function openNewPost() {
     currentPost = null;
-    buttons = [];
     images = [];
     document.getElementById('editor-title').textContent = 'Новый пост';
     document.getElementById('editor-text').value = '';
     document.getElementById('editor-schedule').value = '';
     renderEditorChannels();
-    renderBtnBuilder();
     renderImages();
     updatePreview();
     checkSchedule();
@@ -486,7 +503,6 @@ function editPost(postId) {
     const post = posts.find(p => p.id === postId);
     if (!post) return;
     currentPost = post;
-    buttons = post.buttons ? JSON.parse(JSON.stringify(post.buttons)) : [];
     images = post.images ? JSON.parse(JSON.stringify(post.images)) : [];
     document.getElementById('editor-title').textContent = 'Редактировать';
     document.getElementById('editor-text').value = post.text || '';
@@ -497,7 +513,6 @@ function editPost(postId) {
             cb.checked = post.channels && post.channels.includes(cb.value);
         });
     }, 50);
-    renderBtnBuilder();
     renderImages();
     updatePreview();
     checkSchedule();
@@ -508,8 +523,6 @@ function updatePreview() {
     const text = document.getElementById('editor-text').value;
     const box = document.getElementById('preview-box');
     if (!text) { box.innerHTML = ''; return; }
-    // Telegram accepts HTML directly for Rich Messages. For the browser preview we
-    // only add visual handling for line breaks and the new tg-button elements.
     box.innerHTML = text.replace(/\n/g, '<br>');
 }
 
@@ -690,48 +703,6 @@ async function handleImageUpload(event) {
 
 function removeImage(i) { images.splice(i, 1); renderImages(); }
 
-/* ==================== BUTTONS BUILDER ==================== */
-function renderBtnBuilder() {
-    const el = document.getElementById('btn-builder');
-    if (buttons.length === 0) {
-        el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">Нет кнопок</div>';
-        return;
-    }
-    el.innerHTML = buttons.map((b, i) => {
-        const isUrl = b.type !== 'callback';
-        return `
-        <div class="btn-item">
-            <div class="btn-item-row">
-                <input type="text" class="btn-item-input" placeholder="Текст кнопки" value="${(b.text || '').replace(/"/g, '&quot;')}" oninput="updateButton(${i}, 'text', this.value)">
-                <button class="btn-remove" onclick="removeButton(${i})">×</button>
-            </div>
-            <div class="btn-item-row">
-                <select class="btn-item-input" onchange="updateButton(${i}, 'type', this.value); renderBtnBuilder();">
-                    <option value="url" ${b.type === 'url' ? 'selected' : ''}>URL-ссылка</option>
-                    <option value="callback" ${b.type === 'callback' ? 'selected' : ''}>Callback</option>
-                </select>
-            </div>
-            <div class="btn-item-row">
-                <input type="text" class="btn-item-input" placeholder="${isUrl ? 'https://...' : 'callback_data'}" value="${isUrl ? (b.url || '') : (b.callback || '')}" oninput="updateButton(${i}, '${isUrl ? 'url' : 'callback'}', this.value)">
-            </div>
-            <div class="style-picker">
-                <button class="style-opt primary ${b.style === 'primary' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'primary'); renderBtnBuilder();">🔵 Синяя</button>
-                <button class="style-opt success ${b.style === 'success' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'success'); renderBtnBuilder();">🟢 Зелёная</button>
-                <button class="style-opt danger ${b.style === 'danger' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'danger'); renderBtnBuilder();">🔴 Красная</button>
-                <button class="style-opt default ${!b.style ? 'active' : ''}" onclick="updateButton(${i}, 'style', ''); renderBtnBuilder();">⚪ Обычная</button>
-            </div>
-        </div>
-        `;
-    }).join('');
-}
-
-function addButton() {
-    buttons.push({ text: '', type: 'url', url: '', callback: '', style: 'primary' });
-    renderBtnBuilder();
-}
-function removeButton(i) { buttons.splice(i, 1); renderBtnBuilder(); }
-function updateButton(i, key, value) { if (buttons[i]) buttons[i][key] = value; }
-
 /* ==================== POST DATA ==================== */
 function getSelectedChannels() {
     const checks = document.querySelectorAll('.editor-channel-check:checked');
@@ -744,7 +715,6 @@ function getPostData() {
     return {
         text,
         images: images.filter(img => img.fileId).map(img => img.fileId),
-        buttons: buttons.filter(b => b.text && (b.url || b.callback)),
         channels: getSelectedChannels(),
         scheduledAt: scheduledStr ? new Date(scheduledStr).getTime() : null
     };
