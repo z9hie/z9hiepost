@@ -21,6 +21,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .icon-btn{width:36px;height:36px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:all 0.2s;font-family:inherit}
 .icon-btn:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+.icon-btn:active{transform:scale(0.95)}
 .icon-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
 .main{flex:1;width:100%;max-width:900px;margin:0 auto;padding:20px 20px 100px}
 .page{display:none}
@@ -40,7 +41,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .btn-primary.green{background:var(--green);box-shadow:0 6px 20px rgba(34,197,94,0.4)}
 .btn-primary.green:hover{background:#16a34a}
 .btn-primary svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
-.btn-secondary{width:100%;padding:15px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:13px;color:var(--text-secondary);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;margin-top:10px}
+.btn-secondary{width:100%;padding:15px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:13px;color:var(--text-secondary);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-secondary:hover{background:rgba(255,255,255,0.06);color:var(--text)}
 .card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:all 0.2s}
 .card.clickable{cursor:pointer}
@@ -62,13 +63,39 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .post-status.draft{background:rgba(255,255,255,0.06);color:var(--text-muted)}
 .post-status.scheduled{background:rgba(234,179,8,0.15);color:var(--warning)}
 .post-status.published{background:var(--green-bg);color:var(--green)}
-.post-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-muted);font-weight:600}
+.post-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-muted);font-weight:600;flex-wrap:wrap}
 .form-group{margin-bottom:14px}
 .form-label{display:block;font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
 .form-input,.form-textarea,.form-select{width:100%;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s}
 .form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent)}
-.form-textarea{resize:vertical;min-height:150px;font-family:'SF Mono',Monaco,monospace;font-size:13px;line-height:1.6}
+.form-textarea{resize:vertical;min-height:200px;font-family:'SF Mono',Monaco,monospace;font-size:13px;line-height:1.7}
 .form-select{cursor:pointer}
+/* TOOLBAR */
+.toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;background:var(--bg);border:1px solid var(--border);border-bottom:none;border-radius:11px 11px 0 0;position:sticky;top:var(--header-h);z-index:50}
+.toolbar + .form-textarea{border-radius:0 0 11px 11px;border-top:1px solid var(--border)}
+.tool-btn{width:34px;height:34px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);font-size:13px;font-weight:800;font-family:inherit;transition:all 0.15s;flex-shrink:0}
+.tool-btn:hover{background:rgba(255,255,255,0.08);color:var(--text)}
+.tool-btn:active{transform:scale(0.92)}
+.tool-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2}
+.tool-sep{width:1px;background:var(--border);margin:0 2px;align-self:stretch}
+/* EMOJI PICKER */
+.emoji-picker{display:none;padding:12px;background:var(--bg);border:1px solid var(--border);border-top:none;max-height:250px;overflow-y:auto;border-radius:0 0 11px 11px}
+.emoji-picker.active{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.emoji-btn{font-size:22px;padding:6px;background:none;border:none;cursor:pointer;border-radius:8px;transition:all 0.15s;line-height:1;font-family:inherit}
+.emoji-btn:hover{background:rgba(255,255,255,0.08);transform:scale(1.15)}
+.emoji-category{grid-column:1/-1;font-size:10px;font-weight:800;text-transform:uppercase;color:var(--text-muted);letter-spacing:1px;padding:8px 0 4px;margin-top:4px}
+.emoji-category:first-child{margin-top:0}
+/* IMAGE UPLOAD */
+.images-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-top:10px}
+.image-item{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--bg-card);border:1px solid var(--border)}
+.image-item img{width:100%;height:100%;object-fit:cover}
+.image-remove{position:absolute;top:6px;right:6px;width:26px;height:26px;background:rgba(239,68,68,0.9);border:none;border-radius:8px;color:#fff;font-size:16px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center}
+.image-upload-btn{aspect-ratio:1;background:rgba(255,255,255,0.03);border:2px dashed var(--border);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:var(--text-muted);font-size:11px;font-weight:700;font-family:inherit;transition:all 0.2s}
+.image-upload-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(47,128,237,0.05)}
+.image-upload-btn svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2}
+.image-upload-btn input{display:none}
+.uploading-overlay{position:absolute;inset:0;background:rgba(10,10,15,0.85);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent)}
+/* CHANNELS CHECK */
 .channels-list{display:flex;flex-direction:column;gap:6px}
 .channel-check{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:11px;cursor:pointer;transition:all 0.2s}
 .channel-check:has(input:checked){border-color:var(--accent);background:rgba(47,128,237,0.08)}
@@ -76,6 +103,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .channel-check-info{flex:1;min-width:0}
 .channel-check-name{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .channel-check-username{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:2px}
+/* BUTTON BUILDER */
 .btn-builder{margin-bottom:12px}
 .btn-item{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px}
 .btn-item-row{display:flex;gap:8px;align-items:center}
@@ -85,24 +113,40 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 .btn-remove:hover{background:rgba(239,68,68,0.2)}
 .style-picker{display:flex;gap:6px;flex-wrap:wrap}
 .style-opt{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text-secondary);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s}
-.style-opt.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.style-opt.primary.active{background:var(--accent)}
-.style-opt.success.active{background:var(--green)}
-.style-opt.danger.active{background:var(--danger)}
-.preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;font-family:'SF Mono',Monaco,monospace}
+.style-opt:hover{background:rgba(255,255,255,0.06)}
+.style-opt.active.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.style-opt.active.success{background:var(--green);border-color:var(--green);color:#fff}
+.style-opt.active.danger{background:var(--danger);border-color:var(--danger);color:#fff}
+.style-opt.active.default{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff}
+.preview-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:8px;min-height:60px}
 .preview-box:empty::before{content:'Предпросмотр появится здесь...';color:var(--text-muted);font-style:italic}
 .section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:12px;margin-top:20px}
 .section-title:first-child{margin-top:0}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:500;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.active{display:flex}
-.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:400px;width:100%;max-height:88vh;overflow-y:auto;animation:modalIn 0.3s cubic-bezier(0.16,1,0.3,1)}
-@keyframes modalIn{from{opacity:0;transform:scale(0.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal h3{font-size:18px;font-weight:900;letter-spacing:-0.5px;margin-bottom:16px}
 .toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:rgba(20,20,28,0.95);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;padding:12px 20px;color:var(--text);font-size:13px;font-weight:700;z-index:999;transition:transform 0.3s;max-width:90%;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.success{border-color:rgba(34,197,94,0.4);color:var(--green)}
 .toast.error{border-color:rgba(239,68,68,0.4);color:var(--danger)}
-.loading{display:flex;align-items:center;justify-content:center;padding:60px 20px;color:var(--text-muted);font-size:13px;font-weight:600}
+.bottom-nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:448px;background:rgba(20,20,28,0.92);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:20px;display:flex;justify-content:space-around;padding:8px 6px;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,0.5);margin-bottom:env(safe-area-inset-bottom)}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit}
+.nav-btn svg{width:20px;height:20px;stroke:var(--text-muted);fill:none;stroke-width:2;transition:stroke 0.25s}
+.nav-btn span{font-size:9px;font-weight:800;letter-spacing:0.3px;color:var(--text-muted);transition:color 0.25s;text-transform:uppercase}
+.nav-btn.active svg{stroke:var(--accent)}
+.nav-btn.active span{color:var(--accent)}
+.nav-btn.active{background:rgba(47,128,237,0.08)}
+/* DESKTOP */
+@media (min-width:1024px){
+.main{max-width:1400px;padding:24px 32px 32px;display:grid;grid-template-columns:1fr;gap:24px}
+.bottom-nav{display:none}
+.page-head h2{font-size:28px}
+.editor-layout{display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start}
+.editor-main{min-width:0}
+.editor-side{position:sticky;top:80px;max-height:calc(100vh - 100px);overflow-y:auto;padding-right:8px}
+.editor-side::-webkit-scrollbar{width:6px}
+.editor-side::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
+.form-textarea{min-height:400px}
+.channels-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.images-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+}
 @media (max-width:480px){
 .main{padding:16px 16px 100px}
 .page-head h2{font-size:20px}
@@ -130,7 +174,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
     </header>
 
     <main class="main">
-        <!-- CHANNELS PAGE -->
+        <!-- CHANNELS -->
         <div class="page active" id="page-channels">
             <div class="page-head">
                 <h2>Мои каналы</h2>
@@ -147,7 +191,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
             </div>
         </div>
 
-        <!-- POSTS PAGE -->
+        <!-- POSTS -->
         <div class="page" id="page-posts">
             <div class="page-head">
                 <h2>Мои посты</h2>
@@ -165,7 +209,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
             <div id="posts-list"></div>
         </div>
 
-        <!-- EDITOR PAGE -->
+        <!-- EDITOR -->
         <div class="page" id="page-editor">
             <div class="page-head">
                 <h2 id="editor-title">Новый пост</h2>
@@ -174,89 +218,105 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
                 </button>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">Текст поста (HTML/Markdown)</label>
-                <textarea class="form-textarea" id="editor-text" placeholder="<b>Жирный</b>, <i>курсив</i>, <a href='...'>ссылка</a>&#10;&#10;Поддерживается HTML-разметка" oninput="updatePreview()"></textarea>
-            </div>
+            <div class="editor-layout">
+                <div class="editor-main">
+                    <div class="form-group">
+                        <label class="form-label">Текст поста</label>
+                        <div class="toolbar">
+                            <button class="tool-btn" onclick="fmt('bold')" title="Жирный"><b>B</b></button>
+                            <button class="tool-btn" onclick="fmt('italic')" title="Курсив"><i>I</i></button>
+                            <button class="tool-btn" onclick="fmt('underline')" title="Подчёркнутый"><u>U</u></button>
+                            <button class="tool-btn" onclick="fmt('strike')" title="Зачёркнутый"><s>S</s></button>
+                            <div class="tool-sep"></div>
+                            <button class="tool-btn" onclick="fmt('code')" title="Код"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></button>
+                            <button class="tool-btn" onclick="fmt('pre')" title="Блок кода"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="15"/><line x1="15" y1="9" x2="15" y2="15"/></svg></button>
+                            <button class="tool-btn" onclick="fmt('link')" title="Ссылка"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></button>
+                            <button class="tool-btn" onclick="fmt('spoiler')" title="Спойлер"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            <button class="tool-btn" onclick="fmt('quote')" title="Цитата">❝</button>
+                            <div class="tool-sep"></div>
+                            <button class="tool-btn" onclick="toggleEmoji()" title="Эмодзи">😀</button>
+                        </div>
+                        <textarea class="form-textarea" id="editor-text" placeholder="Напиши текст поста..." oninput="updatePreview()"></textarea>
+                        <div class="emoji-picker" id="emoji-picker"></div>
+                    </div>
 
-            <div class="form-group">
-                <label class="form-label">URL фото (опционально)</label>
-                <input type="text" class="form-input" id="editor-image" placeholder="https://..." oninput="updatePreview()">
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Фото (до 10)</label>
+                        <div class="images-grid" id="images-grid"></div>
+                    </div>
 
-            <div class="section-title">Кнопки</div>
-            <div class="btn-builder" id="btn-builder"></div>
-            <button class="btn-secondary" onclick="addButton()" style="margin-bottom:20px;">
-                <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;vertical-align:middle;margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Добавить кнопку
-            </button>
+                    <div class="section-title">Предпросмотр</div>
+                    <div class="preview-box" id="preview-box"></div>
+                </div>
 
-            <div class="section-title">Каналы для публикации</div>
-            <div class="channels-list" id="editor-channels"></div>
+                <div class="editor-side">
+                    <div class="section-title">Кнопки</div>
+                    <div class="btn-builder" id="btn-builder"></div>
+                    <button class="btn-secondary" onclick="addButton()" style="margin-bottom:0;">
+                        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Добавить кнопку
+                    </button>
 
-            <div class="section-title">Публикация</div>
-            <div class="form-group">
-                <label class="form-label">Запланировать (опционально)</label>
-                <input type="datetime-local" class="form-input" id="editor-schedule">
-            </div>
+                    <div class="section-title">Каналы</div>
+                    <div class="channels-list" id="editor-channels"></div>
 
-            <div class="section-title">Предпросмотр</div>
-            <div class="preview-box" id="preview-box"></div>
+                    <div class="section-title">Публикация</div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label">Запланировать (опционально)</label>
+                        <input type="datetime-local" class="form-input" id="editor-schedule" onchange="checkSchedule()">
+                    </div>
 
-            <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
-                <button class="btn-primary green" onclick="publishNow()">
-                    <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                    Опубликовать сейчас
-                </button>
-                <button class="btn-secondary" onclick="saveDraft()">💾 Сохранить как черновик</button>
-                <button class="btn-secondary" onclick="schedulePost()" id="schedule-btn" style="display:none;">📅 Запланировать</button>
+                    <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+                        <button class="btn-primary green" onclick="publishNow()">
+                            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            Опубликовать сейчас
+                        </button>
+                        <button class="btn-secondary" onclick="saveDraft()">💾 Сохранить черновик</button>
+                        <button class="btn-secondary" onclick="schedulePost()" id="schedule-btn" style="display:none;">📅 Запланировать</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- HELP PAGE -->
+        <!-- HELP -->
         <div class="page" id="page-help">
             <div class="page-head"><h2>Помощь</h2></div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📝 HTML-разметка</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📝 Форматирование</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;b&gt;жирный&lt;/b&gt;</code> → <b>жирный</b><br>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;i&gt;курсив&lt;/i&gt;</code> → <i>курсив</i><br>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;u&gt;подчёркнутый&lt;/u&gt;</code><br>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;s&gt;зачёркнутый&lt;/s&gt;</code><br>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;a href="url"&gt;ссылка&lt;/a&gt;</code><br>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;code&gt;код&lt;/code&gt;</code><br>
-                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;">&lt;pre&gt;блок кода&lt;/pre&gt;</code>
+                    Используй <b>панель инструментов</b> над текстом — она вставляет теги автоматически. Или пиши HTML вручную:
+                    <br><code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;b&gt;жирный&lt;/b&gt;</code>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;i&gt;курсив&lt;/i&gt;</code>
+                    <code style="background:var(--bg);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;">&lt;a href="url"&gt;ссылка&lt;/a&gt;</code>
                 </div>
             </div>
             <div class="card">
                 <div style="font-size:14px;font-weight:800;margin-bottom:8px;">🎨 Цветные кнопки</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    🔵 <b>primary</b> — синяя<br>
-                    🟢 <b>success</b> — зелёная<br>
-                    🔴 <b>danger</b> — красная
+                    🔵 <b>Синяя</b> (primary) · 🟢 <b>Зелёная</b> (success) · 🔴 <b>Красная</b> (danger)
                 </div>
             </div>
             <div class="card">
-                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📅 Планирование</div>
+                <div style="font-size:14px;font-weight:800;margin-bottom:8px;">📸 Фото</div>
                 <div style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
-                    Установи дату и время → пост опубликуется автоматически. Проверка каждые 5 минут.
+                    Нажми «+» в блоке фото → выбери до 10 изображений. Они автоматически загрузятся и будут отправлены с постом.
                 </div>
             </div>
         </div>
     </main>
 
-    <nav style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:448px;background:rgba(20,20,28,0.92);backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:20px;display:flex;justify-content:space-around;padding:8px 6px;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,0.5);margin-bottom:env(safe-area-inset-bottom);" id="bottom-nav">
-        <button class="nav-btn" data-page="channels" onclick="showPage('channels')" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit;">
-            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--text-muted);fill:none;stroke-width:2;"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            <span style="font-size:9px;font-weight:800;color:var(--text-muted);text-transform:uppercase;">Каналы</span>
+    <nav class="bottom-nav" id="bottom-nav">
+        <button class="nav-btn" data-page="channels" onclick="showPage('channels')">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span>Каналы</span>
         </button>
-        <button class="nav-btn active" data-page="posts" onclick="showPage('posts')" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit;">
-            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <span style="font-size:9px;font-weight:800;color:var(--accent);text-transform:uppercase;">Посты</span>
+        <button class="nav-btn active" data-page="posts" onclick="showPage('posts')">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Посты</span>
         </button>
-        <button class="nav-btn" data-page="help" onclick="showPage('help')" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;cursor:pointer;flex:1;border-radius:13px;transition:all 0.2s;border:none;background:none;font-family:inherit;">
-            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--text-muted);fill:none;stroke-width:2;"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span style="font-size:9px;font-weight:800;color:var(--text-muted);text-transform:uppercase;">Помощь</span>
+        <button class="nav-btn" data-page="help" onclick="showPage('help')">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Помощь</span>
         </button>
     </nav>
 </div>
@@ -265,7 +325,16 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 
 <script>
 const tg = window.Telegram?.WebApp;
-if (tg) { tg.ready(); tg.expand(); if (tg.setHeaderColor) tg.setHeaderColor('#0a0a0f'); if (tg.setBackgroundColor) tg.setBackgroundColor('#0a0a0f'); if (tg.disableVerticalSwipes) tg.disableVerticalSwipes(); }
+if (tg) {
+    tg.ready();
+    tg.expand();
+    if (tg.requestFullscreen) { try { tg.requestFullscreen(); } catch(e) {} }
+    if (tg.setHeaderColor) tg.setHeaderColor('#0a0a0f');
+    if (tg.setBackgroundColor) tg.setBackgroundColor('#0a0a0f');
+    if (tg.setBottomBarColor) tg.setBottomBarColor('#0a0a0f');
+    if (tg.disableVerticalSwipes) tg.disableVerticalSwipes();
+    if (tg.enableClosingConfirmation) tg.enableClosingConfirmation();
+}
 
 const SERVER_URL = "https://z9hiepost.z9hie.workers.dev";
 const user = tg?.initDataUnsafe?.user || { first_name: 'Гость', username: 'guest', id: 0 };
@@ -277,10 +346,12 @@ let posts = [];
 let currentPost = null;
 let postTab = 'draft';
 let buttons = [];
+let images = [];
 
 async function apiGet(path) { const res = await fetch(SERVER_URL + path); return res.json(); }
 async function apiPost(path, data) { const res = await fetch(SERVER_URL + path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }); return res.json(); }
 
+/* ==================== DATA ==================== */
 async function loadChannels() {
     try {
         const data = await apiGet(`/api/channels?userId=${user.id}`);
@@ -300,14 +371,16 @@ async function loadPosts() {
     } catch(e) { showToast('Ошибка загрузки постов', 'error'); }
 }
 
+async function reloadData() {
+    await Promise.all([loadChannels(), loadPosts()]);
+    showToast('Обновлено', 'success');
+}
+
+/* ==================== RENDER CHANNELS ==================== */
 function renderChannels() {
     const el = document.getElementById('channels-list');
     if (channels.length === 0) {
-        el.innerHTML = `<div class="empty">
-            <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-            <div class="empty-title">Нет каналов</div>
-            <div class="empty-text">Добавь бота в канал и перешли пост</div>
-        </div>`;
+        el.innerHTML = `<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="empty-title">Нет каналов</div><div class="empty-text">Добавь бота в канал и перешли пост</div></div>`;
         return;
     }
     el.innerHTML = channels.map(ch => `
@@ -341,19 +414,14 @@ function renderEditorChannels() {
     `).join('');
 }
 
+/* ==================== RENDER POSTS ==================== */
 function renderPosts() {
     const el = document.getElementById('posts-list');
     const filtered = posts.filter(p => p.status === postTab);
-    
     if (filtered.length === 0) {
-        el.innerHTML = `<div class="empty">
-            <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-            <div class="empty-title">Пусто</div>
-            <div class="empty-text">${postTab === 'draft' ? 'Создай первый пост' : postTab === 'scheduled' ? 'Нет запланированных' : 'Нет опубликованных'}</div>
-        </div>`;
+        el.innerHTML = `<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="empty-title">Пусто</div></div>`;
         return;
     }
-    
     el.innerHTML = filtered.map(p => {
         const date = new Date(p.createdAt).toLocaleString('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
         const statusText = { draft: 'Черновик', scheduled: 'Запланирован', published: 'Опубликован' }[p.status] || p.status;
@@ -364,8 +432,9 @@ function renderPosts() {
             </div>
             <div class="post-meta">
                 <span>📅 ${date}</span>
-                ${p.channels && p.channels.length ? `<span>📢 ${p.channels.length} кан.</span>` : ''}
-                ${p.buttons && p.buttons.length ? `<span>🔘 ${p.buttons.length} кноп.</span>` : ''}
+                ${p.channels && p.channels.length ? `<span>📢 ${p.channels.length}</span>` : ''}
+                ${p.buttons && p.buttons.length ? `<span>🔘 ${p.buttons.length}</span>` : ''}
+                ${p.images && p.images.length ? `<span>📸 ${p.images.length}</span>` : ''}
             </div>
         </div>`;
     }).join('');
@@ -377,28 +446,28 @@ function setPostTab(tab) {
     renderPosts();
 }
 
+/* ==================== NAV ==================== */
 function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const page = document.getElementById('page-' + name);
     if (page) page.classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(b => {
-        const active = b.dataset.page === name;
-        b.querySelector('svg').style.stroke = active ? 'var(--accent)' : 'var(--text-muted)';
-        b.querySelector('span').style.color = active ? 'var(--accent)' : 'var(--text-muted)';
-    });
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.page === name));
     window.scrollTo(0, 0);
 }
 
+/* ==================== EDITOR ==================== */
 function openNewPost() {
     currentPost = null;
     buttons = [];
+    images = [];
     document.getElementById('editor-title').textContent = 'Новый пост';
     document.getElementById('editor-text').value = '';
-    document.getElementById('editor-image').value = '';
     document.getElementById('editor-schedule').value = '';
     renderEditorChannels();
     renderBtnBuilder();
+    renderImages();
     updatePreview();
+    checkSchedule();
     showPage('editor');
 }
 
@@ -407,91 +476,237 @@ function editPost(postId) {
     if (!post) return;
     currentPost = post;
     buttons = post.buttons ? JSON.parse(JSON.stringify(post.buttons)) : [];
+    images = post.images ? JSON.parse(JSON.stringify(post.images)) : [];
     document.getElementById('editor-title').textContent = 'Редактировать';
     document.getElementById('editor-text').value = post.text || '';
-    document.getElementById('editor-image').value = (post.images && post.images[0]) || '';
-    document.getElementById('editor-schedule').value = post.scheduledAt ? new Date(post.scheduledAt).toISOString().slice(0, 16) : '';
+    document.getElementById('editor-schedule').value = post.scheduledAt ? new Date(post.scheduledAt - new Date().getTimezoneOffset()*60000).toISOString().slice(0, 16) : '';
     renderEditorChannels();
-    // Отмечаем каналы
     setTimeout(() => {
         document.querySelectorAll('.editor-channel-check').forEach(cb => {
             cb.checked = post.channels && post.channels.includes(cb.value);
         });
     }, 50);
     renderBtnBuilder();
+    renderImages();
     updatePreview();
+    checkSchedule();
     showPage('editor');
 }
 
 function updatePreview() {
     const text = document.getElementById('editor-text').value;
-    const box = document.getElementById('preview-box');
-    box.innerHTML = text || '';
+    document.getElementById('preview-box').innerHTML = text || '';
 }
 
+/* ==================== TOOLBAR ==================== */
+function fmt(type) {
+    const ta = document.getElementById('editor-text');
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const selected = ta.value.substring(start, end);
+    let replacement = '';
+    let cursorOffset = 0;
+    
+    const wrap = (before, after, placeholder) => {
+        const txt = selected || placeholder;
+        replacement = before + txt + after;
+        cursorOffset = before.length + txt.length;
+    };
+    
+    switch(type) {
+        case 'bold': wrap('<b>', '</b>', 'жирный'); break;
+        case 'italic': wrap('<i>', '</i>', 'курсив'); break;
+        case 'underline': wrap('<u>', '</u>', 'подчёркнутый'); break;
+        case 'strike': wrap('<s>', '</s>', 'зачёркнутый'); break;
+        case 'code': wrap('<code>', '</code>', 'код'); break;
+        case 'pre': wrap('<pre>', '</pre>', 'блок кода'); break;
+        case 'spoiler': wrap('<tg-spoiler>', '</tg-spoiler>', 'спойлер'); break;
+        case 'quote': wrap('<blockquote>', '</blockquote>', 'цитата'); break;
+        case 'link': {
+            const url = prompt('Введите URL:', 'https://');
+            if (!url) return;
+            const text = selected || 'ссылка';
+            replacement = `<a href="${url}">${text}</a>`;
+            cursorOffset = replacement.length;
+            break;
+        }
+    }
+    
+    ta.value = ta.value.substring(0, start) + replacement + ta.value.substring(end);
+    ta.focus();
+    ta.setSelectionRange(start + cursorOffset, start + cursorOffset);
+    updatePreview();
+}
+
+/* ==================== EMOJI ==================== */
+const EMOJIS = {
+    'Смайлы': ['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','🥰','😍','🤩','😘','😗','😚','😙','🥲','😋','😛','😜','🤪','😝','🤗','🤔','🤨','😐','😑','😶','😏','😒','🙄','😬','😮‍💨','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤮','🥵','🥶','😵','🤯','🤠','🥳','😎','🤓','🧐','😕','😟','🙁','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','😈','👿','💀','☠️','💩','🤡','👹','👺','👻','👽','👾','🤖'],
+    'Жесты': ['👍','👎','👌','🤌','🤏','✌️','🤞','🤟','🤘','🤙','👈','👉','👆','👇','☝️','✋','🤚','🖐️','🖖','👋','🤝','🙏','✍️','💅','🤳','💪','🦾','🖕','✊','👊','🤛','🤜','👏','🙌','👐','🤲','🤝'],
+    'Сердца': ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','♥️','💌','💋'],
+    'Животные': ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔','🐧','🐦','🐤','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷️','🦂','🐢','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🐊','🐅','🐆','🦓','🦍','🦧','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🐃','🐂','🐄','🐎','🐖','🐏','🐑','🦙','🐐','🦌','🐕','🐩','🦮','🐕‍🦺','🐈','🐈‍⬛','🐓','🦃','🦚','🦜','🦢','🦩','🕊️','🐇','🦝','🦨','🦡','🦦','🦥','🐁','🐀','🐿️','🦔'],
+    'Еда': ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🫒','🧄','🧅','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍳','🧈','🥞','🧇','🥓','🥩','🍗','🍖','🦴','🌭','🍔','🍟','🍕','🫓','🥪','🥙','🧆','🌮','🌯','🫔','🥗','🥘','🫕','🥫','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🦪','🍤','🍙','🍚','🍘','🍥','🥠','🥮','🍢','🍡','🍧','🍨','🍦','🥧','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','🥛','🍼','🫖','☕','🍵','🧃','🥤','🧋','🍶','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🧉','🍾','🧊'],
+    'Природа': ['🌍','🌎','🌏','🌕','🌖','🌗','🌘','🌑','🌒','🌓','🌔','🌙','🌚','🌝','🌞','⭐','🌟','💫','✨','⚡','🔥','💥','❄️','🌊','💧','☔','☁️','⛅','🌤️','🌦️','🌧️','⛈️','🌩️','🌨️','🌪️','🌈','☀️','🌺','🌸','🌼','🌻','🌷','🌹','🥀','🌾','🌿','☘️','🍀','🍁','🍂','🍃','🌱','🌲','🌳','🌴','🌵','🎋','🎍'],
+    'Символы': ['✅','❌','⭕','❗','❓','❕','❔','⚠️','🚫','💯','🔴','🟠','🟡','🟢','🔵','🟣','⚫','⚪','🟥','🟧','🟨','🟩','🟦','🟪','⬛','⬜','🔶','🔷','🔸','🔹','🔺','🔻','💠','🔘','🔳','🔲','▪️','▫️','◾','◽','◼️','◻️','🟤','🔱','📛','🔰','♻️','✳️','❇️','✴️','💤','🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚','🕛'],
+    'Разное': ['🎉','🎊','🎁','🎀','🎈','🎂','🎄','🎃','🎇','🎆','✨','🪄','🎯','🎮','🎲','🎰','🧩','🎨','🖼️','🎭','🎪','🎬','🎤','🎧','🎼','🎵','🎶','🎸','🎹','🎺','🎻','🥁','📱','💻','🖥️','⌨️','🖱️','🖨️','💾','💿','📀','📷','📸','📹','🎥','📽️','📞','☎️','📟','📠','📺','📻','🧭','⏱️','⏲️','⏰','🕰️','⌚','📡','🔋','🔌','💡','🔦','🕯️','🪔','🧯','🛢️','💸','💵','💴','💶','💷','💰','💳','💎','⚖️','🧰','🔧','🔨','⚒️','🛠️','⛏️','🪓','🪚','🔩','⚙️','🧱','⛓️','🧲','🔫','💣','🧨','🪓','🔪','🗡️','⚔️','🛡️','🚬','⚰️','🪦','⚱️','🏺','🔮','📿','🧿','💈','⚗️','🔭','🔬','🕳️','🩹','🩺','💊','💉','🩸','🧬','🦠','🧫','🧪','🌡️','🧹','🧺','🧻','🚽','🚰','🚿','🛁','🛀','🧼','🪥','🪒','🧽','🪣','🧴','🛎️','🔑','🗝️','🚪','🪑','🛋️','🛏️','🛌','🧸','🪆','🖼️','🪞','🪟','🛍️','🛒','🎁']
+};
+
+function toggleEmoji() {
+    const picker = document.getElementById('emoji-picker');
+    if (picker.classList.contains('active')) {
+        picker.classList.remove('active');
+        return;
+    }
+    let html = '';
+    for (const [cat, list] of Object.entries(EMOJIS)) {
+        html += `<div class="emoji-category">${cat}</div>`;
+        html += list.map(e => `<button class="emoji-btn" onclick="insertEmoji('${e}')">${e}</button>`).join('');
+    }
+    picker.innerHTML = html;
+    picker.classList.add('active');
+}
+
+function insertEmoji(emoji) {
+    const ta = document.getElementById('editor-text');
+    const start = ta.selectionStart;
+    ta.value = ta.value.substring(0, start) + emoji + ta.value.substring(ta.selectionEnd);
+    ta.focus();
+    ta.setSelectionRange(start + emoji.length, start + emoji.length);
+    updatePreview();
+}
+
+/* ==================== IMAGES ==================== */
+function renderImages() {
+    const grid = document.getElementById('images-grid');
+    let html = images.map((img, i) => `
+        <div class="image-item">
+            <img src="${img.url}" alt="">
+            <button class="image-remove" onclick="removeImage(${i})">×</button>
+            ${img.uploading ? `<div class="uploading-overlay">Загрузка...</div>` : ''}
+        </div>
+    `).join('');
+    if (images.length < 10) {
+        html += `
+            <label class="image-upload-btn">
+                <input type="file" accept="image/*" multiple onchange="handleImageUpload(event)">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Добавить
+            </label>
+        `;
+    }
+    grid.innerHTML = html;
+}
+
+async function handleImageUpload(event) {
+    const files = Array.from(event.target.files);
+    event.target.value = '';
+    for (const file of files) {
+        if (images.length >= 10) break;
+        if (!file.type.startsWith('image/')) continue;
+        if (file.size > 10 * 1024 * 1024) { showToast('Максимум 10 МБ', 'error'); continue; }
+        
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const dataUrl = e.target.result;
+            const tempIndex = images.length;
+            images.push({ url: dataUrl, fileId: null, uploading: true });
+            renderImages();
+            
+            try {
+                const data = await apiPost('/api/upload', { userId: user.id, image: dataUrl });
+                if (data.success) {
+                    images[tempIndex] = { url: dataUrl, fileId: data.fileId, uploading: false };
+                } else {
+                    images[tempIndex] = { url: dataUrl, fileId: null, uploading: false };
+                    showToast('Ошибка загрузки', 'error');
+                }
+                renderImages();
+            } catch(err) {
+                images[tempIndex].uploading = false;
+                renderImages();
+                showToast('Ошибка загрузки', 'error');
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function removeImage(i) { images.splice(i, 1); renderImages(); }
+
+/* ==================== BUTTONS BUILDER ==================== */
 function renderBtnBuilder() {
     const el = document.getElementById('btn-builder');
     if (buttons.length === 0) {
         el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">Нет кнопок</div>';
         return;
     }
-    el.innerHTML = buttons.map((b, i) => `
+    el.innerHTML = buttons.map((b, i) => {
+        const isUrl = b.type !== 'callback';
+        return `
         <div class="btn-item">
             <div class="btn-item-row">
-                <input type="text" class="btn-item-input" placeholder="Текст кнопки" value="${b.text || ''}" oninput="updateButton(${i}, 'text', this.value)">
+                <input type="text" class="btn-item-input" placeholder="Текст кнопки" value="${(b.text || '').replace(/"/g, '&quot;')}" oninput="updateButton(${i}, 'text', this.value)">
                 <button class="btn-remove" onclick="removeButton(${i})">×</button>
             </div>
             <div class="btn-item-row">
-                <select class="btn-item-input" onchange="updateButton(${i}, 'type', this.value)">
+                <select class="btn-item-input" onchange="updateButton(${i}, 'type', this.value); renderBtnBuilder();">
                     <option value="url" ${b.type === 'url' ? 'selected' : ''}>URL-ссылка</option>
                     <option value="callback" ${b.type === 'callback' ? 'selected' : ''}>Callback</option>
                 </select>
             </div>
             <div class="btn-item-row">
-                <input type="text" class="btn-item-input" placeholder="${b.type === 'callback' ? 'callback_data' : 'https://...'}" value="${b.type === 'callback' ? (b.callback || '') : (b.url || '')}" oninput="updateButton(${i}, '${b.type === 'callback' ? 'callback' : 'url'}', this.value)">
+                <input type="text" class="btn-item-input" placeholder="${isUrl ? 'https://...' : 'callback_data'}" value="${isUrl ? (b.url || '') : (b.callback || '')}" oninput="updateButton(${i}, '${isUrl ? 'url' : 'callback'}', this.value)">
             </div>
             <div class="style-picker">
-                <button class="style-opt ${b.style === 'primary' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'primary')">🔵 Синяя</button>
-                <button class="style-opt success ${b.style === 'success' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'success')">🟢 Зелёная</button>
-                <button class="style-opt danger ${b.style === 'danger' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'danger')">🔴 Красная</button>
-                <button class="style-opt ${!b.style ? 'active' : ''}" onclick="updateButton(${i}, 'style', '')">⚪ Обычная</button>
+                <button class="style-opt primary ${b.style === 'primary' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'primary'); renderBtnBuilder();">🔵 Синяя</button>
+                <button class="style-opt success ${b.style === 'success' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'success'); renderBtnBuilder();">🟢 Зелёная</button>
+                <button class="style-opt danger ${b.style === 'danger' ? 'active' : ''}" onclick="updateButton(${i}, 'style', 'danger'); renderBtnBuilder();">🔴 Красная</button>
+                <button class="style-opt default ${!b.style ? 'active' : ''}" onclick="updateButton(${i}, 'style', ''); renderBtnBuilder();">⚪ Обычная</button>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
-function addButton() { buttons.push({ text: '', type: 'url', url: '', style: 'primary' }); renderBtnBuilder(); }
+function addButton() {
+    buttons.push({ text: '', type: 'url', url: '', callback: '', style: 'primary' });
+    renderBtnBuilder();
+}
 function removeButton(i) { buttons.splice(i, 1); renderBtnBuilder(); }
-function updateButton(i, key, value) { buttons[i][key] = value; if (key === 'type') renderBtnBuilder(); }
+function updateButton(i, key, value) { if (buttons[i]) buttons[i][key] = value; }
 
+/* ==================== POST DATA ==================== */
 function getSelectedChannels() {
     const checks = document.querySelectorAll('.editor-channel-check:checked');
     return Array.from(checks).map(cb => cb.value);
 }
 
 function getPostData() {
+    const scheduledStr = document.getElementById('editor-schedule').value;
     return {
         text: document.getElementById('editor-text').value,
-        images: document.getElementById('editor-image').value ? [document.getElementById('editor-image').value] : [],
+        images: images.filter(img => img.fileId).map(img => img.fileId),
         buttons: buttons.filter(b => b.text && (b.url || b.callback)),
         channels: getSelectedChannels(),
-        scheduledAt: document.getElementById('editor-schedule').value ? new Date(document.getElementById('editor-schedule').value).getTime() : null
+        scheduledAt: scheduledStr ? new Date(scheduledStr).getTime() : null
     };
+}
+
+function checkSchedule() {
+    const scheduledStr = document.getElementById('editor-schedule').value;
+    document.getElementById('schedule-btn').style.display = scheduledStr ? 'flex' : 'none';
 }
 
 async function saveDraft() {
     const post = getPostData();
-    if (!post.text && post.images.length === 0) { showToast('Напиши текст', 'error'); return; }
+    if (!post.text && post.images.length === 0) { showToast('Напиши текст или добавь фото', 'error'); return; }
+    post.status = 'draft';
+    post.scheduledAt = null;
     
     if (currentPost) {
-        post.status = 'draft';
-        post.scheduledAt = null;
         await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
     } else {
-        post.status = 'draft';
         await apiPost('/api/posts/create', { userId: user.id, post });
     }
-    
     showToast('Черновик сохранён', 'success');
     await loadPosts();
     showPage('posts');
@@ -499,14 +714,14 @@ async function saveDraft() {
 
 async function publishNow() {
     const post = getPostData();
-    if (!post.text && post.images.length === 0) { showToast('Напиши текст', 'error'); return; }
+    if (!post.text && post.images.length === 0) { showToast('Напиши текст или добавь фото', 'error'); return; }
     if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
+    if (images.some(img => img.uploading)) { showToast('Дождись загрузки фото', 'error'); return; }
     
-    if (!confirm('Опубликовать во ' + post.channels.length + ' канал(ов)?')) return;
+    if (!confirm(`Опубликовать в ${post.channels.length} канал(ов)?`)) return;
     
     showToast('Публикуем...');
     const result = await apiPost('/api/posts/publish-direct', { userId: user.id, post });
-    
     if (result.success) {
         const okCount = result.results.filter(r => r.ok).length;
         showToast(`Опубликовано: ${okCount}/${result.results.length}`, 'success');
@@ -522,15 +737,13 @@ async function schedulePost() {
     if (!post.text) { showToast('Напиши текст', 'error'); return; }
     if (post.channels.length === 0) { showToast('Выбери каналы', 'error'); return; }
     if (!post.scheduledAt) { showToast('Установи дату', 'error'); return; }
+    post.status = 'scheduled';
     
     if (currentPost) {
-        post.status = 'scheduled';
         await apiPost('/api/posts/update', { userId: user.id, postId: currentPost.id, updates: post });
     } else {
-        post.status = 'scheduled';
         await apiPost('/api/posts/create', { userId: user.id, post });
     }
-    
     showToast('Запланировано', 'success');
     await loadPosts();
     showPage('posts');
@@ -543,11 +756,7 @@ async function deleteChannel(channelId) {
     await loadChannels();
 }
 
-async function reloadData() {
-    await Promise.all([loadChannels(), loadPosts()]);
-    showToast('Обновлено', 'success');
-}
-
+/* ==================== TOAST ==================== */
 function showToast(text, type = '') {
     const toast = document.getElementById('toast');
     toast.textContent = text;
@@ -556,16 +765,7 @@ function showToast(text, type = '') {
     window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
-// Проверка кнопки планирования
-setInterval(() => {
-    const scheduleInput = document.getElementById('editor-schedule');
-    const scheduleBtn = document.getElementById('schedule-btn');
-    if (scheduleInput && scheduleBtn) {
-        scheduleBtn.style.display = scheduleInput.value ? 'block' : 'none';
-    }
-}, 500);
-
-// Init
+/* ==================== INIT ==================== */
 loadChannels();
 loadPosts();
 </script>
